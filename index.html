@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jessica Fung — Portfolio 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;1,9..40,300&family=Schoolbell&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="clock" aria-label="Local time in Boston">
+      <span>BOSTON MA</span>
+      <time id="boston-time" datetime="">9:30</time>
+    </header>
+
+    <div class="page">
+      <section class="hero" aria-label="Introduction">
+        <div class="hero-copy">
+          <h1>hi im jessica,</h1>
+          <p class="lede">
+            <span class="lede-line">I enjoy designing experiences that help everyday</span>
+            <span class="lede-line">moments feel a little more special.</span>
+          </p>
+          <p class="roles">
+            Currently @Bose<br />
+            Previously @Disney
+          </p>
+        </div>
+        <button class="player" type="button" aria-pressed="false" aria-label="Play Blackbird">
+          <img class="player-notes" src="assets/music-notes.gif" alt="" width="560" height="880" />
+          <img class="player-record" src="assets/record-still.png" data-still="assets/record-still.png" data-motion="assets/record.gif" alt="" width="988" height="624" />
+          <img class="player-case" src="assets/player-case.png" alt="" width="1298" height="1292" />
+          <img class="player-needle" src="assets/needle-still.png" data-still="assets/needle-still.png" data-motion="assets/needle.gif" alt="" width="615" height="198" />
+        </button>
+        <audio id="player-audio" src="assets/blackbird.mp3" preload="auto" loop></audio>
+      </section>
+
+      <section class="collection" id="collection">
+        <header class="section-heading">
+          <h2>my collection</h2>
+          <p>A mix of work and play</p>
+        </header>
+
+        <article class="record-row" data-project="bose">
+          <div class="stand">
+            <img class="shelf-back" src="assets/shelf-back.png" alt="" />
+            <div class="album">
+              <img src="assets/album-bose.png" alt="Bose album cover: make life better with great sound" />
+            </div>
+            <img class="shelf-front" src="assets/shelf-front.png" alt="" />
+          </div>
+          <div class="project">
+            <p class="eyebrow">HARDWARE UX</p>
+            <h3>Designing feature experiences for Bose</h3>
+            <p class="summary">Audio sharing, hands-free interactions, and user-customizable controls</p>
+            <ul class="chips">
+              <li>journey mapping</li>
+              <li>product behaviors</li>
+              <li>multimodal feedback</li>
+              <li>ux specifications</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="record-row" data-project="disney">
+          <div class="stand">
+            <img class="shelf-back" src="assets/shelf-back.png" alt="" />
+            <div class="album">
+              <img src="assets/album-disney.png" alt="Disney album cover: project 002, The Walt Disney Company" />
+            </div>
+            <img class="shelf-front" src="assets/shelf-front.png" alt="" />
+          </div>
+          <div class="project">
+            <p class="eyebrow">DESIGN SYSTEMS</p>
+            <h3>Building a unified design system for Disney</h3>
+            <p class="summary">Modular components and standards for internal event communications</p>
+            <ul class="chips">
+              <li>design patterns</li>
+              <li>design tokens</li>
+              <li>system guidelines</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="record-row" data-project="spotify">
+          <div class="stand">
+            <img class="shelf-back" src="assets/shelf-back.png" alt="" />
+            <div class="album">
+              <img src="assets/album-spotify.png" alt="Album cover 003: location-based music exploration, Sounds of Boston" />
+            </div>
+            <img class="shelf-front" src="assets/shelf-front.png" alt="" />
+          </div>
+          <div class="project">
+            <p class="eyebrow">UX EXPLORATION</p>
+            <h3>Exploring personalized music discovery for Spotify</h3>
+            <p class="summary">A concept for supporting cultural immersion through music</p>
+            <ul class="chips">
+              <li>feature discovery</li>
+              <li>market research</li>
+              <li>prototyping</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="record-row" data-project="tide">
+          <div class="stand">
+            <img class="shelf-back" src="assets/shelf-back.png" alt="" />
+            <div class="album">
+              <img src="assets/album-tide.png" alt="Album cover 004: tide and AT&amp;T national student advertising competition" />
+            </div>
+            <img class="shelf-front" src="assets/shelf-front.png" alt="" />
+          </div>
+          <div class="project">
+            <p class="eyebrow">VISUAL DESIGN</p>
+            <h3>X</h3>
+            <p class="summary">Core visuals for out-of-home and experiential brand activations</p>
+            <ul class="chips">
+              <li>X</li>
+              <li>X</li>
+              <li>X</li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <section class="about" id="about">
+        <h2>a bit about me...</h2>
+        <div class="about-grid">
+          <div class="portrait-wrap">
+            <img class="portrait" src="assets/portrait-jess.png" alt="Portrait of Jessica on crumpled paper with a jess signature and paperclip" width="837" height="1116" />
+          </div>
+          <div class="about-copy">
+            <p>This space is an expression of a few things I love most: music, art, and design.</p>
+            <p>
+              <span class="about-line">I've organized my work into a collection of records. Each one holds a different</span>
+              <span class="about-line">project from my time at Bose and Disney, along with personal explorations.</span>
+            </p>
+            <p>
+              <span class="about-line">At the heart of my work is the belief that design should be worth feeling and</span>
+              <span class="about-line">experiencing. As a designer, I want to create things that are useful, but also</span>
+              <span class="about-line">add something meaningful to how people experience the world around them.</span>
+            </p>
+            <p>
+              <span class="about-line">Outside of work, I love picking up new crafts (currently pottery), vintage</span>
+              <span class="about-line">shopping, and exploring the east coast!</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <img class="signature" src="assets/music-vibration.gif" alt="" width="414" height="145" />
+        <p class="copyright"><span>©</span> 2026</p>
+      </footer>
+    </div>
+
+    <script src="app.js?v=still"></script>
+  </body>
+</html>

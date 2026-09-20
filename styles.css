@@ -1,0 +1,533 @@
+:root {
+  --bg: #f9f5ed;
+  --ink: #1c1c1a;
+  --body: #3c3b37;
+  --muted: #6b6a65;
+  --chip: #c2c1be;
+  --page: min(1512px, 100%);
+  --stand-w: 336px;
+  --album-w: 292px;
+  --album-h: 295.37px;
+  --shelf-front-h: 64px;
+  --media-col: var(--stand-w);
+  --copy-col: 640px;
+  --split-gap: 68px;
+  --content: calc(var(--media-col) + var(--split-gap) + var(--copy-col));
+  --page-pad-x: clamp(48px, 5.5vw, 80px);
+  --stack-gap: 48px;
+  --stack-gap-copy: 32px;
+  --grid: url("assets/single-grid.png");
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg);
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--bg);
+  font-family: "DM Sans", sans-serif;
+  font-weight: 300;
+  font-optical-sizing: auto;
+  line-height: 1.4;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: var(--grid);
+  background-repeat: repeat;
+  background-position: top left;
+  background-size: 504px 509px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: var(--page);
+  margin: 0 auto;
+  padding: 88px var(--page-pad-x) 16px;
+}
+
+.hero,
+.collection,
+.about,
+.site-footer {
+  width: min(100%, var(--content));
+}
+
+.clock {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 40px;
+  width: 100%;
+  margin: 0;
+  padding: 48px var(--page-pad-x) 0;
+  white-space: nowrap;
+  font-family: "DM Mono", monospace;
+  font-weight: 300;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-align: center;
+}
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 80px;
+}
+
+.hero-copy {
+  flex: 1 1 440px;
+  max-width: 520px;
+}
+
+.player {
+  position: relative;
+  flex: 0 0 324px;
+  width: 324px;
+  height: 323px;
+  margin-top: 8px;
+  margin-left: 0;
+  overflow: visible;
+  cursor: pointer;
+}
+
+.player.is-playing {
+  outline: none;
+}
+
+.hero h1,
+.section-heading h2,
+.about h2 {
+  margin: 0;
+  font-family: "Schoolbell", cursive;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.lede {
+  margin: 24px 0 0;
+  font-size: 20px;
+  line-height: 1.4;
+  color: var(--body);
+}
+
+.lede-line {
+  display: block;
+  white-space: nowrap;
+}
+
+.roles,
+.section-heading p {
+  margin: 24px 0 0;
+  font-size: 20px;
+  line-height: 1.4;
+  color: var(--body);
+}
+
+.roles {
+  margin-top: 24px;
+}
+
+.player img {
+  position: absolute;
+  max-width: none;
+  pointer-events: none;
+  user-select: none;
+}
+
+.player-case {
+  left: 0;
+  top: 0;
+  width: 324px;
+  height: 323px;
+  object-fit: fill;
+  z-index: 2;
+}
+
+.player-record {
+  left: 56px;
+  top: 125px;
+  width: 200px;
+  height: 126px;
+  object-fit: fill;
+  z-index: 1;
+}
+
+.player-needle {
+  left: 149.58px;
+  top: 174.17px;
+  width: 119.21px;
+  height: 40.53px;
+  object-fit: fill;
+  transform: rotate(-1.16deg);
+  transform-origin: center;
+  z-index: 3;
+}
+
+.player-notes {
+  left: -14px;
+  top: -20px;
+  width: 110.84px;
+  height: 174.18px;
+  object-fit: fill;
+  object-position: center;
+  transform: rotate(-25deg);
+  transform-origin: center;
+  z-index: 4;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.player.is-playing .player-notes {
+  opacity: 1;
+}
+
+.collection {
+  margin-top: 96px;
+}
+
+.section-heading p {
+  margin-top: 12px;
+}
+
+.record-row,
+.about-grid {
+  display: grid;
+  grid-template-columns: var(--media-col) var(--copy-col);
+  column-gap: var(--split-gap);
+  justify-content: center;
+  width: 100%;
+}
+
+.record-row {
+  align-items: center;
+}
+
+.about-grid {
+  align-items: center;
+}
+
+.record-row {
+  margin-top: 80px;
+}
+
+.stand {
+  position: relative;
+  width: var(--stand-w);
+  height: 348px;
+}
+
+.shelf-back,
+.shelf-front,
+.album {
+  position: absolute;
+}
+
+.shelf-back {
+  left: 18px;
+  bottom: 24px;
+  width: 300px;
+  height: 176px;
+  object-fit: fill;
+  z-index: 1;
+}
+
+.album {
+  left: 22px;
+  top: 0;
+  width: var(--album-w);
+  height: var(--album-h);
+  z-index: 2;
+}
+
+.album img {
+  width: var(--album-w);
+  height: var(--album-h);
+  object-fit: contain;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  outline: none;
+}
+
+.shelf-front {
+  left: 0;
+  bottom: 0;
+  width: var(--stand-w);
+  height: var(--shelf-front-h);
+  max-width: none;
+  object-fit: fill;
+  object-position: bottom;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.project {
+  width: 590px;
+  max-width: 100%;
+  justify-self: start;
+}
+
+.project .eyebrow {
+  margin: 0;
+  font-family: "DM Mono", monospace;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.project h3 {
+  margin: 12px 0 0;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.summary {
+  margin: 10px 0 0;
+  font-size: 18px;
+  line-height: 1.4;
+  color: var(--body);
+  white-space: nowrap;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chips li {
+  border: 0.75px solid var(--chip);
+  border-radius: 6px;
+  padding: 6px 9px;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+.about {
+  margin-top: 144px;
+}
+
+.about h2 {
+  margin-bottom: 28px;
+}
+
+.about-grid {
+  margin-top: 0;
+}
+
+.portrait-wrap {
+  width: 278.72px;
+  justify-self: start;
+}
+
+.portrait {
+  width: 278.72px;
+  height: 371.63px;
+  object-fit: contain;
+  border: 0;
+  outline: none;
+  box-shadow: none;
+}
+
+.about-copy {
+  width: 640px;
+  max-width: 100%;
+  padding-top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-self: start;
+}
+
+.about-copy p {
+  margin: 0;
+  width: 100%;
+  font-size: 18px;
+  line-height: 1.4;
+  color: var(--body);
+}
+
+.about-copy p:first-child {
+  white-space: nowrap;
+}
+
+.about-line {
+  display: block;
+  white-space: nowrap;
+}
+
+.site-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 72px;
+  padding-bottom: 8px;
+  text-align: center;
+}
+
+.signature {
+  width: 112px;
+  height: 34px;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.copyright {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  font-family: "DM Mono", monospace;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.copyright span {
+  font-size: 18px;
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 1280px) {
+  .hero {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--stack-gap);
+  }
+
+  .hero-copy {
+    width: min(520px, 100%);
+    max-width: none;
+    flex: 0 0 auto;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .player {
+    margin: 0 auto;
+  }
+
+  .section-heading,
+  .about h2 {
+    text-align: center;
+  }
+
+  .record-row,
+  .about-grid {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    row-gap: var(--stack-gap-copy);
+  }
+
+  .stand,
+  .portrait-wrap,
+  .project,
+  .about-copy {
+    margin-inline: auto;
+    justify-self: center;
+  }
+
+  .project {
+    width: min(590px, 100%);
+    text-align: left;
+  }
+
+  .about-copy {
+    width: min(640px, 100%);
+    padding-top: 0;
+    text-align: center;
+  }
+
+  .about-line {
+    text-align: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .clock {
+    gap: 20px;
+  }
+
+  .chips {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .player {
+    transform: scale(0.86);
+    transform-origin: center top;
+    margin-bottom: -40px;
+  }
+
+  .stand {
+    transform: scale(0.92);
+    transform-origin: center top;
+    margin-bottom: -24px;
+  }
+
+  .portrait-wrap,
+  .portrait {
+    width: min(278.72px, 100%);
+    height: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .project h3,
+  .summary {
+    white-space: normal;
+  }
+
+  .project {
+    width: 100%;
+    max-width: 100%;
+  }
+}
