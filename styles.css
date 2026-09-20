@@ -16,6 +16,10 @@
   --page-pad-x: clamp(48px, 5.5vw, 80px);
   --stack-gap: 48px;
   --stack-gap-copy: 32px;
+  --space-1: 8px;
+  --space-2: 12px;
+  --space-3: 16px;
+  --space-4: 24px;
   --grid: url("assets/single-grid.png");
 }
 
@@ -142,7 +146,7 @@ button {
 }
 
 .lede {
-  margin: 24px 0 0;
+  margin: var(--space-4) 0 0;
   font-size: 20px;
   line-height: 1.4;
   color: var(--body);
@@ -155,14 +159,14 @@ button {
 
 .roles,
 .section-heading p {
-  margin: 24px 0 0;
+  margin: var(--space-4) 0 0;
   font-size: 20px;
   line-height: 1.4;
   color: var(--body);
 }
 
 .roles {
-  margin-top: 24px;
+  margin-top: var(--space-3);
 }
 
 .player img {
@@ -211,12 +215,6 @@ button {
   transform: rotate(-25deg);
   transform-origin: center;
   z-index: 4;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.player.is-playing .player-notes {
-  opacity: 1;
 }
 
 .collection {
@@ -224,7 +222,7 @@ button {
 }
 
 .section-heading p {
-  margin-top: 12px;
+  margin-top: var(--space-2);
 }
 
 .record-row,
@@ -246,17 +244,20 @@ button {
 
 .record-row {
   margin-top: 80px;
+  overflow: visible;
 }
 
 .stand {
   position: relative;
   width: var(--stand-w);
   height: 348px;
+  overflow: visible;
 }
 
 .shelf-back,
 .shelf-front,
-.album {
+.album,
+.album-vinyl {
   position: absolute;
 }
 
@@ -267,6 +268,23 @@ button {
   height: 176px;
   object-fit: fill;
   z-index: 1;
+}
+
+.album-vinyl {
+  left: 302px;
+  top: 13px;
+  width: 111px;
+  height: 270px;
+  object-fit: fill;
+  background: transparent;
+  z-index: 1;
+  pointer-events: none;
+  transform: translateX(-126px);
+  transition: transform 2.05s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stand:has(.album:hover) .album-vinyl {
+  transform: translateX(0);
 }
 
 .album {
@@ -315,7 +333,7 @@ button {
 }
 
 .project h3 {
-  margin: 12px 0 0;
+  margin: var(--space-2) 0 0;
   font-size: 20px;
   font-weight: 500;
   line-height: 1.4;
@@ -323,7 +341,7 @@ button {
 }
 
 .summary {
-  margin: 10px 0 0;
+  margin: var(--space-1) 0 0;
   font-size: 18px;
   line-height: 1.4;
   color: var(--body);
@@ -334,7 +352,7 @@ button {
   display: flex;
   flex-wrap: nowrap;
   gap: 6px;
-  margin: 20px 0 0;
+  margin: var(--space-2) 0 0;
   padding: 0;
   list-style: none;
 }
@@ -353,7 +371,7 @@ button {
 }
 
 .about h2 {
-  margin-bottom: 28px;
+  margin-bottom: var(--space-4);
 }
 
 .about-grid {
@@ -380,7 +398,7 @@ button {
   padding-top: 0;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--space-3);
   justify-self: start;
 }
 
@@ -406,7 +424,7 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: var(--space-2);
   margin-top: 72px;
   padding-bottom: 8px;
   text-align: center;
@@ -529,5 +547,11 @@ button {
   .project {
     width: 100%;
     max-width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .album-vinyl {
+    transition: none;
   }
 }
