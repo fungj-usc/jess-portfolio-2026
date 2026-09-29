@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>hands-free call interaction — Jessica Fung</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;1,9..40,300&family=Schoolbell&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css?v=preview66" />
+  </head>
+  <body>
+    <a class="case-home" href="index.html">&lt;- return home</a>
+    <header class="clock" aria-label="Local time in Boston">
+      <span>BOSTON MA</span>
+      <time id="boston-time" datetime="">9:30</time>
+    </header>
+
+    <div class="page">
+      <article class="case">
+        <div class="case-hero">
+          <header class="case-heading">
+            <h1>hands-free call interaction</h1>
+            <p class="case-kicker">a natural way to respond when your hands are busy</p>
+          </header>
+
+          <div class="case-intro">
+            <p>
+              I worked alongside another Product UX designer on a hands-free call experience for Bose wearables. We
+              collaborated closely with engineering to define the interaction and with user research to test and improve
+              its performance.
+            </p>
+            <img class="case-ill case-ill-phone" src="assets/bose-phonecall.gif" alt="" width="290" height="336" />
+          </div>
+        </div>
+
+        <hr class="case-rule" />
+
+        <section class="case-section">
+          <h2>impact overview</h2>
+          <div class="impact">
+            <div class="impact-item">
+              <p class="impact-stat">4 products</p>
+              <p class="impact-note">Implementation across wearables</p>
+            </div>
+            <hr class="impact-rule" />
+            <div class="impact-item">
+              <p class="impact-stat">&gt;95% system success rate</p>
+              <p class="impact-note">Measured alongside other performance metrics</p>
+            </div>
+            <hr class="impact-rule" />
+            <div class="impact-item">
+              <p class="impact-stat">patent review</p>
+              <p class="impact-note">Interaction considered for patent protection</p>
+            </div>
+          </div>
+        </section>
+
+        <hr class="case-rule" />
+
+        <section class="case-section">
+          <h2>the opportunity</h2>
+          <div class="case-copy">
+            <p>
+              Wearables are used across different activities and environments, including times when your hands are
+              occupied. Reaching for your phone or headphones while cooking or working out, for example, isn’t always
+              convenient.
+            </p>
+            <p>
+              We explored how a hands-free interaction could give people another way to respond to incoming calls
+              without interrupting what they're doing.
+            </p>
+            <p>
+              Unlike pressing a button, a hands-free system has to distinguish intentional interaction from natural
+              movement. This shaped how we defined the interaction requirements.
+            </p>
+          </div>
+          <img class="case-ill case-ill-hands" src="assets/bose-handsfree.gif" alt="" width="368" height="360" />
+        </section>
+
+        <hr class="case-rule" />
+
+        <section class="case-section">
+          <h2>early explorations</h2>
+          <div class="case-copy">
+            <p>
+              We started with a competitive analysis of existing hands-free interactions on wearables. We tested these
+              experiences while walking, running and jumping to see how they performed with movement. We also looked at
+              online feedback to see how comfortable people felt using them.
+            </p>
+            <p>
+              This helped us define what the interaction needed to do: respond easily when intended without being so
+              sensitive that everyday movement could trigger it accidentally.
+            </p>
+          </div>
+          <p class="case-prompt">how can we be responsive without being overly sensitive?</p>
+          <img class="case-ill case-ill-head" src="assets/bose-headphone.gif" alt="" width="420" height="420" />
+        </section>
+
+        <hr class="case-rule" />
+
+        <section class="case-section">
+          <h2>designing the interaction</h2>
+          <div class="case-copy">
+            <p>We mapped the happy path from the moment a call comes in through the product's system response.</p>
+            <p class="case-prompt">incoming call → option to respond → user action → system response</p>
+            <p>
+              From there, we designed two interaction approaches with different levels of guardrails against accidental
+              activation. We hypothesized that a stronger guardrail would reduce accidental activations but could also
+              make the interaction harder to perform.
+            </p>
+            <p>
+              We worked with engineering to turn each approach into system requirements we could prototype. This gave us
+              two distinct prototypes to test and compare.
+            </p>
+            <p class="case-note">Note: Specific interaction behaviors and requirements have been omitted for confidentiality</p>
+          </div>
+        </section>
+
+        <hr class="case-rule" />
+
+        <section class="case-section">
+          <h2>user research</h2>
+          <div class="case-copy">
+            <p>
+              We partnered with user research to A/B test the two prototypes with 20 participants. We tested across
+              different movements to compare performance and how people felt using each approach.
+            </p>
+            <p>
+              The stronger guardrail performed better overall, with fewer accidental activations. This supported our
+              initial hypothesis and gave us a direction to move forward with.
+            </p>
+          </div>
+          <h3>our learnings</h3>
+          <div class="impact">
+            <div class="impact-item">
+              <p class="impact-stat">fewer accidental activations</p>
+              <p class="impact-note">The stronger guardrail worked as intended</p>
+            </div>
+            <hr class="impact-rule" />
+            <div class="impact-item">
+              <p class="impact-stat">harder to trigger</p>
+              <p class="impact-note">The system sensitivity needed further tuning</p>
+            </div>
+            <hr class="impact-rule" />
+            <div class="impact-item">
+              <p class="impact-stat">unclear system response</p>
+              <p class="impact-note">People didn’t always know when their input was recognized</p>
+            </div>
+          </div>
+          <img class="case-ill case-ill-research" src="assets/bose-research.gif" alt="" width="375" height="600" />
+        </section>
+
+        <hr class="case-rule" />
+
+        <section class="case-section">
+          <h2>iterating on the experience</h2>
+          <div class="case-copy">
+            <p>Based on these findings, we continued refining the selected approach.</p>
+            <p>
+              We worked with engineering to tune the system sensitivity, making intentional interactions easier to
+              trigger without increasing accidental activations. We also introduced audio feedback to make the system's
+              response clearer and worked with the app team on education so people could learn and practice the
+              interaction.
+            </p>
+            <p>We brought the updated prototype back into testing to validate these changes.</p>
+          </div>
+          <img class="case-ill case-ill-scale" src="assets/bose-scale.gif" alt="" width="465" height="240" />
+        </section>
+
+        <hr class="case-rule" />
+
+        <section class="case-section">
+          <h2>the outcome</h2>
+          <div class="case-copy">
+            <p>
+              The refined interaction reached a &gt;95% system success rate in testing. With these improvements, the team
+              had confidence to move toward implementation across four Bose wearables, with aspects of the interaction
+              also considered for patent protection.
+            </p>
+          </div>
+        </section>
+      </article>
+
+      <footer class="site-footer">
+        <img class="signature" src="assets/music-vibration.gif" alt="" width="414" height="145" />
+        <a class="back-to-top" href="#top">return to top</a>
+      </footer>
+    </div>
+
+    <script src="app.js?v=preview18"></script>
+  </body>
+</html>

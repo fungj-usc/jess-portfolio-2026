@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>internal comms design system — Jessica Fung</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;1,9..40,300&family=Schoolbell&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css?v=preview66" />
+  </head>
+  <body>
+    <a class="case-home" href="index.html">&lt;- return home</a>
+    <header class="clock" aria-label="Local time in Boston">
+      <span>BOSTON MA</span>
+      <time id="boston-time" datetime="">9:30</time>
+    </header>
+
+    <div class="page">
+      <article class="case">
+        <div class="case-hero">
+          <header class="case-heading">
+            <h1>internal comms design system</h1>
+            <p class="case-kicker">building a more scalable way to design and deliver internal communications</p>
+          </header>
+
+          <div class="case-intro">
+            <p>
+              I developed a design system for Disney’s internal event communications using reusable components and
+              layouts that adapt to different content and branding. I worked closely with production to align the
+              component structure between design and implementation.
+            </p>
+          </div>
+        </div>
+
+        <hr class="case-rule" />
+
+        <section class="case-section">
+          <h2>impact overview</h2>
+          <div class="impact">
+            <div class="impact-item">
+              <p class="impact-stat">17 components</p>
+              <p class="impact-note">Built for common communication needs</p>
+            </div>
+            <hr class="impact-rule" />
+            <div class="impact-item">
+              <p class="impact-stat">800+ annual emails</p>
+              <p class="impact-note">Scale the system is designed to support</p>
+            </div>
+            <hr class="impact-rule" />
+            <div class="impact-item">
+              <p class="impact-stat">~40% faster</p>
+              <p class="impact-note">Estimated reduction in build and review time</p>
+            </div>
+          </div>
+        </section>
+
+        <hr class="case-rule" />
+
+        <section class="case-section">
+          <h2>the opportunity</h2>
+          <div class="case-copy">
+            <p>
+              Disney Corporate Creative Resources (DCCR) supports internal events across the company, including
+              leadership meetings and global employee programs. Each event can require multiple digital touchpoints,
+              such as invitations, registration, reminders, and follow-up communications.
+            </p>
+            <p>
+              As the volume and complexity of events grew, similar designs were being recreated. Even small changes
+              could require another round of design, production, and review.
+            </p>
+            <p>
+              I saw an opportunity to reduce repeated work by creating a consistent foundation for these communications.
+            </p>
+          </div>
+          <figure class="disney-figure disney-brands-fit" aria-label="Brand applications across Disney teams">
+            <div class="disney-stage disney-brands-stage">
+              <p class="disney-brand-label disney-brand-cfo">CFO Town Hall</p>
+              <p class="disney-brand-label disney-brand-finance">Finance Leadership</p>
+              <p class="disney-brand-label disney-brand-security">Global Security</p>
+              <p class="disney-brand-label disney-brand-cyber">Cybersecurity</p>
+              <p class="disney-brand-label disney-brand-learning">Learning &amp;<br />Talent Solutions</p>
+              <p class="disney-brand-label disney-brand-shareholders">Shareholders Meeting</p>
+              <p class="disney-brand-label disney-brand-risk">Risk Management</p>
+              <p class="disney-brand-label disney-brand-excess">Corporate Excess</p>
+              <p class="disney-brand-label disney-brand-legaluni">Legal University</p>
+              <p class="disney-brand-label disney-brand-belonging">Global Belonging</p>
+              <img class="disney-brand-img disney-brand-twdc" src="assets/disney-header-twdc.png" alt="The Walt Disney Company" width="720" height="156" />
+              <img class="disney-brand-img disney-brand-finimg" src="assets/disney-header-finance.png" alt="Disney Finance" width="720" height="156" />
+              <img class="disney-brand-img disney-brand-legalimg" src="assets/disney-header-legal.png" alt="Disney Legal and Global Affairs" width="720" height="156" />
+              <img class="disney-brand-img disney-brand-commsimg" src="assets/disney-header-comms.png" alt="Disney Communications" width="720" height="156" />
+              <img class="disney-brand-img disney-brand-hrimg" src="assets/disney-header-hr.png" alt="Disney Human Resources" width="720" height="156" />
+              <svg class="disney-overlay" viewBox="0 0 563 276" fill="none" aria-hidden="true">
+                <g transform="translate(100,23)"><path d="M43.5 14.5C34.45 4.04 18.93 -1.2 0.5 0.98" stroke="#1C1C1A" stroke-linecap="round" stroke-dasharray="6 6" /></g>
+                <g transform="translate(100,80)"><path d="M43.5 11.5C32.26 1.83 15.65 -1.68 0.5 1.83" stroke="#1C1C1A" stroke-linecap="round" stroke-dasharray="6 6" /></g>
+                <g transform="translate(115,131)"><path d="M28.5 0.5C22.61 3.49 12.5 4.98 0.5 4.36" stroke="#1C1C1A" stroke-linecap="round" stroke-dasharray="6 6" /></g>
+                <g transform="translate(89,153)"><path d="M54.5 0.5C44.93 7.3 22.1 11.41 0.5 6.02" stroke="#1C1C1A" stroke-linecap="round" stroke-dasharray="6 6" /></g>
+                <g transform="translate(108,253)"><path d="M35.5 0.5C29.75 5.74 12 7.49 0.5 2.68" stroke="#1C1C1A" stroke-linecap="round" stroke-dasharray="6 6" /></g>
+                <g transform="translate(408,23)"><path d="M0.5 8.5C9.14 2.09 23.23 -1.88 40.5 2.09" stroke="#1C1C1A" stroke-linecap="round" stroke-dasharray="6 6" /></g>
+                <g transform="translate(408,82)"><path d="M0.5 9.5C9.39 1.11 23.99 -0.63 40.5 1.11" stroke="#1C1C1A" stroke-linecap="round" stroke-dasharray="6 6" /></g>
+                <g transform="translate(408,130)"><path d="M0.5 2.6C10.28 5.84 26.28 4.8 32.5 0.5" stroke="#1C1C1A" stroke-linecap="round" stroke-dasharray="6 6" /></g>
+                <g transform="translate(408,150)"><path d="M0.5 2.87C23.88 10.63 56.08 7.81 69.5 0.5" stroke="#1C1C1A" stroke-linecap="round" stroke-dasharray="6 6" /></g>
+                <g transform="translate(408,253)"><path d="M0.5 0.5C5.81 4.19 23.39 7.88 35.5 3.54" stroke="#1C1C1A" stroke-linecap="round" stroke-dasharray="6 6" /></g>
+              </svg>
+            </div>
+          </figure>
+        </section>
+
+        <hr class="case-rule" />
+
+        <section class="case-section">
+          <h2>understanding the patterns</h2>
+          <div class="case-copy">
+            <p>
+              I started by reviewing existing registration experiences to understand where repeated design work was
+              happening.
+            </p>
+            <p>
+              I mapped recurring components and compared how they varied based on event requirements. I consulted the
+              communications and development teams to understand which variations were necessary.
+            </p>
+            <p>This helped distinguish what could be standardized from what needed to remain flexible.</p>
+          </div>
+        </section>
+
+        <hr class="case-rule" />
+
+        <section class="case-section">
+          <h2>building the system</h2>
+          <div class="case-copy">
+            <p>I used these findings to create a modular Figma template.</p>
+            <p>
+              Research into atomic design helped define how components could combine into modules, sections, and
+              templates. I also reviewed industry design systems to understand how similar libraries were structured.
+            </p>
+            <p>I structured our system into four levels:</p>
+            <p class="case-prompt">template -&gt; section -&gt; module -&gt; component</p>
+            <p>
+              For example, Date and Time components combine into a Date &amp; Time module within an Event Details
+              section.
+            </p>
+            <p>
+              I standardized layout, spacing, typography, and behavior, then used properties and modes to manage
+              variations within each component.
+            </p>
+          </div>
+          <figure class="disney-figure disney-atomic-fit" aria-label="Atomic design of the confirmation template">
+            <div class="disney-stage disney-atomic-stage">
+              <p class="disney-atomic-label disney-atomic-l-template">Template: Confirmation</p>
+              <img class="disney-atomic-template" src="assets/disney-template.png" alt="Confirmation email template" width="389" height="876" />
+              <div class="disney-atomic-outline" aria-hidden="true"></div>
+              <p class="disney-atomic-label disney-atomic-l-event">Section: Event Details<br />(Organism)</p>
+              <img class="disney-atomic-event" src="assets/disney-part-event.png" alt="Event details module" width="603" height="284" />
+              <p class="disney-atomic-label disney-atomic-l-module">Module: Date &amp; Time<br />(Molecule)</p>
+              <img class="disney-atomic-module" src="assets/disney-part-datetime.png" alt="Date and time module" width="603" height="161" />
+              <p class="disney-atomic-label disney-atomic-l-date">Component: Date<br />(Atom)</p>
+              <img class="disney-atomic-date" src="assets/disney-part-date.png" alt="Date component" width="603" height="122" />
+              <p class="disney-atomic-label disney-atomic-l-time">Component: Time<br />(Atom)</p>
+              <img class="disney-atomic-time" src="assets/disney-part-time.png" alt="Time component" width="603" height="98" />
+              <p class="disney-atomic-label disney-atomic-l-viewing">Component: Viewing Option In-person<br />(Atom)</p>
+              <img class="disney-atomic-viewing" src="assets/disney-part-viewing.png" alt="In-person viewing option component" width="603" height="150" />
+              <svg class="disney-overlay" viewBox="0 0 900 313" fill="none" aria-hidden="true">
+                <path d="M143.5 133.5 H163.5" stroke="#1C1C1A" stroke-linecap="round" stroke-dasharray="6 6" />
+                <path d="M386 134 H406" stroke="#1C1C1A" stroke-linecap="round" stroke-dasharray="6 6" />
+                <path d="M406.5 111.5 H426.5" stroke="#1C1C1A" stroke-linecap="round" stroke-dasharray="6 6" />
+                <path d="M406 112 V262" stroke="#1C1C1A" stroke-linecap="round" stroke-dasharray="6 6" />
+                <path d="M406 262.5 H689" stroke="#1C1C1A" stroke-linecap="round" stroke-dasharray="6 6" />
+                <path d="M649.5 111.5 H669.5" stroke="#1C1C1A" stroke-linecap="round" stroke-dasharray="6 6" />
+                <path d="M669 69 V154" stroke="#1C1C1A" stroke-linecap="round" stroke-dasharray="6 6" />
+                <path d="M669 69 H689" stroke="#1C1C1A" stroke-linecap="round" stroke-dasharray="6 6" />
+                <path d="M669 154 H689" stroke="#1C1C1A" stroke-linecap="round" stroke-dasharray="6 6" />
+              </svg>
+            </div>
+          </figure>
+        </section>
+
+        <hr class="case-rule" />
+
+        <section class="case-section">
+          <h2>aligning with production</h2>
+          <div class="case-copy">
+            <p>The Figma components also needed to match how they were built in production.</p>
+            <p>
+              I worked with production to align each Figma component with its coded version in Litmus. We established
+              consistent naming and matched the structure, variants, and behavior across both platforms.
+            </p>
+            <p>
+              This created a one-to-one mapping between Figma and Litmus, reducing translation between design and
+              production.
+            </p>
+          </div>
+          <div class="disney-figure case-map-fit" aria-label="Figma to Litmus component mapping">
+            <div class="disney-stage case-map-stage">
+              <img class="case-map-figma" src="assets/disney-logo-figma.png" alt="Figma" width="456" height="152" />
+              <svg class="case-map-curve case-map-curve-l" viewBox="0 0 63 28" preserveAspectRatio="none" fill="none" aria-hidden="true">
+                <path d="M62.5 27.3C53.5 3.52 22.5 -4.7 0.5 3.52" stroke="#1C1C1A" stroke-linecap="round" stroke-dasharray="6 6" />
+              </svg>
+              <ul class="case-map-names">
+                <li>EDS_Event_DateTime</li>
+                <li>EDS_Event_Date</li>
+                <li>EDS_Button_RSVP</li>
+                <li>EDS_Button_Replay</li>
+                <li>EDS_Headline_WithText</li>
+                <li>EDS_Timezone_DateWithDayOffset</li>
+                <li>EDS_Headshots_SubHeadline_Center</li>
+                <li>EDS_Headshots_SubHeadline_Left</li>
+                <li>EDS_Footer_Invitation</li>
+                <li>and more+</li>
+              </ul>
+              <svg class="case-map-curve case-map-curve-r" viewBox="0 0 63 28" preserveAspectRatio="none" fill="none" aria-hidden="true">
+                <path d="M0.5 27.3C9.5 3.52 40.5 -4.7 62.5 3.52" stroke="#1C1C1A" stroke-linecap="round" stroke-dasharray="6 6" />
+              </svg>
+              <img class="case-map-litmus" src="assets/disney-logo-litmus.png" alt="Litmus" width="1000" height="339" />
+            </div>
+          </div>
+        </section>
+
+        <hr class="case-rule" />
+
+        <section class="case-section">
+          <h2>documenting the system</h2>
+          <div class="case-copy">
+            <p>
+              I documented the system in a live prototype that design and production could use as a shared reference.
+            </p>
+            <p>
+              Each component includes guidance on when to use it, how to adjust its properties and modes, and examples
+              from previous communications.
+            </p>
+          </div>
+          <figure class="disney-figure disney-docs-fit">
+            <div class="disney-stage disney-docs-stage">
+              <div class="disney-docs-stack">
+                <article class="disney-doc-card"><img src="assets/disney-doc-viewing.png" alt="Viewing Options documentation" width="1060" height="704" /></article>
+                <article class="disney-doc-card"><img src="assets/disney-doc-datetime.png" alt="Date and Time documentation" width="1060" height="704" /></article>
+                <article class="disney-doc-card"><img src="assets/disney-doc-headlines.png" alt="Headlines documentation" width="1060" height="704" /></article>
+              </div>
+              <div class="disney-docs-stack">
+                <article class="disney-doc-card"><img src="assets/disney-doc-footers.png" alt="Footers documentation" width="1060" height="704" /></article>
+                <article class="disney-doc-card"><img src="assets/disney-doc-timezones.png" alt="Timezones documentation" width="1060" height="704" /></article>
+                <article class="disney-doc-card"><img src="assets/disney-doc-speakers.png" alt="Speakers documentation" width="1060" height="704" /></article>
+              </div>
+            </div>
+          </figure>
+        </section>
+
+        <hr class="case-rule" />
+
+        <section class="case-section">
+          <h2>the outcome</h2>
+          <div class="case-copy">
+            <p>
+              The team deploys more than 800 emails each year, with most future builds expected to use the system. By
+              starting with existing components and reducing revisions between design and production, build and review
+              time is estimated to decrease by approximately 40%.
+            </p>
+          </div>
+        </section>
+
+        <hr class="case-rule" />
+
+        <section class="case-section">
+          <h2>next steps</h2>
+          <div class="case-copy">
+            <p>
+              The next phase will bring the system to Disney’s internal web platform, with components adapted to work
+              across responsive layouts.
+            </p>
+          </div>
+        </section>
+      </article>
+
+      <footer class="site-footer">
+        <img class="signature" src="assets/music-vibration.gif" alt="" width="414" height="145" />
+        <a class="back-to-top" href="#top">return to top</a>
+      </footer>
+    </div>
+
+    <script src="app.js?v=preview31"></script>
+  </body>
+</html>

@@ -5,10 +5,15 @@
   --muted: #6b6a65;
   --chip: #c2c1be;
   --page: min(1512px, 100%);
-  --stand-w: 336px;
+  --stand-w: 354px;
   --album-w: 292px;
   --album-h: 295.37px;
-  --shelf-front-h: 64px;
+  --album-left: 31px;
+  --vinyl-top: 17px;
+  --vinyl-h: 270px;
+  --shelf-front-h: 68px;
+  --shelf-back-w: 318px;
+  --shelf-back-left: 18px;
   --media-col: var(--stand-w);
   --copy-col: 640px;
   --split-gap: 68px;
@@ -42,6 +47,28 @@ body {
   font-weight: 300;
   font-optical-sizing: auto;
   line-height: 1.4;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  body {
+    animation: page-in 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  body.is-leaving {
+    animation: none;
+    opacity: 0;
+    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 body::before {
@@ -88,6 +115,201 @@ button {
   width: min(100%, var(--content));
 }
 
+.album-link,
+.project-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.album-link {
+  display: block;
+  width: var(--stand-w);
+}
+
+.project-link {
+  display: block;
+  width: 590px;
+  max-width: 100%;
+  justify-self: start;
+}
+
+.project-preview {
+  --preview-overlap: 20px;
+  --preview-shift: -48px;
+  position: absolute;
+  left: calc(var(--media-col) + var(--split-gap) - var(--preview-overlap));
+  top: calc(var(--vinyl-top) + var(--vinyl-h) / 2);
+  width: calc(590px + var(--preview-overlap));
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--chip);
+  border-radius: 10px;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 3;
+  background: #111;
+  transform: translate(var(--preview-shift), -50%);
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0.9s;
+  transition-delay: 0s;
+}
+
+.record-row:has(.project-preview):has(.project-link:hover) .project-preview,
+.record-row:has(.project-preview):has(.project-preview:hover) .project-preview,
+.record-row:has(.project-preview):has(.project-link:focus-within) .project-preview,
+.record-row:has(.project-preview).is-previewing .project-preview {
+  --preview-shift: 0px;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0.45s;
+}
+
+.record-row:has(.project-preview) .project-link {
+  position: relative;
+  z-index: 2;
+  transition:
+    visibility 0.9s;
+  transition-delay: 0s;
+}
+
+.record-row:has(.project-preview):has(.project-link:hover) .project-link,
+.record-row:has(.project-preview):has(.project-preview:hover) .project-link,
+.record-row:has(.project-preview):has(.project-link:focus-within) .project-link,
+.record-row:has(.project-preview).is-previewing .project-link {
+  animation: preview-copy-ack 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  visibility: hidden;
+  pointer-events: none;
+  transition-delay: 0.45s;
+}
+
+@keyframes preview-copy-ack {
+  0% {
+    opacity: 1;
+  }
+
+  28% {
+    opacity: 0.7;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.preview-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 1;
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-preview.is-clip-fading .preview-video {
+  opacity: 0;
+}
+
+.project-preview.is-clean {
+  background: rgb(249 245 237 / 0.38);
+}
+
+.project-preview.is-clean .preview-video {
+  inset: 20px;
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+  object-fit: contain;
+  object-position: center;
+  border-radius: 10px;
+}
+
+.project-preview.is-pulse {
+  background: #111;
+}
+
+.project-preview.is-pulse .preview-video {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(2.2);
+  transform-origin: center center;
+}
+
+.preview-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.46);
+  pointer-events: none;
+}
+
+.preview-topics {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 56px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.preview-topics-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.preview-topic {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+  width: max-content;
+  margin: 0;
+  font-family: "Schoolbell", cursive;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.preview-topic::before {
+  content: "";
+  width: 2px;
+  flex: 0 0 2px;
+  align-self: stretch;
+  background: #fff;
+  border-radius: 99px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.preview-topic.is-current::before,
+.preview-topic:focus-visible::before {
+  opacity: 1;
+}
+
+.preview-topic.is-disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .clock {
   position: relative;
   z-index: 2;
@@ -106,6 +328,64 @@ button {
   letter-spacing: 0.08em;
   color: var(--muted);
   text-align: center;
+}
+
+.case-home {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 8;
+  padding: 48px var(--page-pad-x) 16px;
+  font-family: "Schoolbell", cursive;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--ink);
+  text-decoration: none;
+  background: transparent;
+  white-space: nowrap;
+}
+
+.case-home:hover,
+.case-home:focus-visible {
+  opacity: 0.7;
+}
+
+#boston-time {
+  display: inline-flex;
+  align-items: center;
+  height: 1.2em;
+  letter-spacing: 0;
+}
+
+.clock-colon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 0.62em;
+}
+
+.clock-digit {
+  display: inline-block;
+  position: relative;
+  width: 0.74em;
+  height: 1.2em;
+  overflow: hidden;
+}
+
+.clock-digit-track {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateY(calc(var(--i, 0) * -1.2em));
+}
+
+.clock-digit-track > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.2em;
+  line-height: 1.2em;
 }
 
 .hero {
@@ -243,6 +523,7 @@ button {
 }
 
 .record-row {
+  position: relative;
   margin-top: 80px;
   overflow: visible;
 }
@@ -252,6 +533,7 @@ button {
   width: var(--stand-w);
   height: 348px;
   overflow: visible;
+  z-index: 6;
 }
 
 .shelf-back,
@@ -262,19 +544,19 @@ button {
 }
 
 .shelf-back {
-  left: 18px;
+  left: var(--shelf-back-left);
   bottom: 24px;
-  width: 300px;
+  width: var(--shelf-back-w);
   height: 176px;
   object-fit: fill;
   z-index: 1;
 }
 
 .album-vinyl {
-  left: 302px;
-  top: 13px;
+  left: calc(var(--album-left) + var(--album-w) - 12px);
+  top: var(--vinyl-top);
   width: 111px;
-  height: 270px;
+  height: var(--vinyl-h);
   object-fit: fill;
   background: transparent;
   z-index: 1;
@@ -283,16 +565,77 @@ button {
   transition: transform 2.05s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.stand:has(.album:hover) .album-vinyl {
+.record-row:not(:has(.project-preview)) .stand:has(.album:hover) .album-vinyl,
+.record-row:has(.project-preview):has(.project-link:hover) .album-vinyl,
+.record-row:has(.project-preview):has(.project-preview:hover) .album-vinyl,
+.record-row:has(.project-preview):has(.project-link:focus-within) .album-vinyl,
+.record-row:has(.project-preview).is-previewing .album-vinyl {
   transform: translateX(0);
 }
 
 .album {
-  left: 22px;
+  left: var(--album-left);
   top: 0;
   width: var(--album-w);
   height: var(--album-h);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  color: inherit;
   z-index: 2;
+  cursor: pointer;
+  transform: translateY(0);
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.album:hover,
+.album:focus-visible {
+  transform: translateY(-5px);
+}
+
+.record-row:has(.project-link:hover) .album,
+.record-row:has(.project-preview:hover) .album,
+.record-row:has(.project-link:focus-within) .album,
+.record-row.is-previewing .album {
+  z-index: 2;
+  transform: none;
+  cursor: default;
+  pointer-events: none;
+}
+
+.album:focus-visible {
+  outline: 1px solid var(--chip);
+  outline-offset: 4px;
+}
+
+.album.is-zoomed {
+  pointer-events: none;
+}
+
+.album.is-zoomed img {
+  visibility: hidden;
+}
+
+.album.is-docking {
+  pointer-events: none;
+  transform: translateY(-24px);
+  transition: none;
+}
+
+.album.is-docking img {
+  visibility: visible;
+  opacity: 0;
+}
+
+.album.is-docking.is-seating {
+  transform: translateY(0);
+  transition: transform 0.95s cubic-bezier(0.22, 0.82, 0.28, 1);
+}
+
+.album.is-docking.is-seating img {
+  opacity: 1;
+  transition: opacity 0.55s cubic-bezier(0.22, 0.82, 0.28, 1);
 }
 
 .album img {
@@ -303,6 +646,7 @@ button {
   border-radius: 0;
   box-shadow: none;
   outline: none;
+  pointer-events: none;
 }
 
 .shelf-front {
@@ -454,6 +798,501 @@ button {
   letter-spacing: 0.08em;
 }
 
+.back-to-top {
+  font-family: "DM Mono", monospace;
+  font-weight: 300;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-decoration: none;
+  transition: opacity 0.35s ease;
+}
+
+.back-to-top:hover,
+.back-to-top:focus-visible {
+  opacity: 0.7;
+}
+
+.case {
+  --case-inset: 56px;
+  width: min(100%, var(--content));
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 48px;
+}
+
+.case-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+}
+
+.case-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-inline: var(--case-inset);
+}
+
+.case h1 {
+  margin: 0;
+  font-family: "Schoolbell", cursive;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.case-kicker {
+  margin: 0;
+  font-family: "Schoolbell", cursive;
+  font-size: 26px;
+  line-height: normal;
+}
+
+.case-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+  width: 100%;
+}
+
+.case-intro p {
+  margin: 0;
+  width: 100%;
+  padding-inline: var(--case-inset);
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 1.4;
+  color: var(--body);
+}
+
+.case-rule,
+.impact-rule {
+  display: block;
+  width: 100%;
+  max-width: none;
+  align-self: stretch;
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--chip);
+}
+
+.case-rule {
+  width: auto;
+  margin-inline: var(--case-inset);
+}
+
+.case-section {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  align-items: center;
+  width: 100%;
+}
+
+.case-section h2,
+.case-section h3 {
+  margin: 0;
+  width: 100%;
+  padding-inline: var(--case-inset);
+  font-family: "Schoolbell", cursive;
+  font-size: 26px;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.case-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  padding-inline: var(--case-inset);
+}
+
+.case-copy p {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 1.4;
+  color: var(--body);
+}
+
+.case-prompt {
+  margin: 0;
+  width: 100%;
+  font-family: "Schoolbell", cursive;
+  font-size: 26px;
+  font-weight: 400;
+  line-height: normal;
+  text-align: center;
+  color: var(--ink);
+}
+
+.case-section > .case-prompt {
+  padding-inline: var(--case-inset);
+}
+
+.case-copy p.case-prompt {
+  font-family: "Schoolbell", cursive;
+  font-size: 26px;
+  font-weight: 400;
+  line-height: normal;
+  color: var(--ink);
+}
+
+.case-copy p.case-note {
+  font-style: italic;
+}
+
+.case-ill {
+  object-fit: contain;
+}
+
+.case-ill-phone {
+  width: 93px;
+  height: 108px;
+}
+
+.case-ill-hands {
+  width: 120px;
+  height: 118px;
+}
+
+.case-ill-head {
+  width: 120px;
+  height: 120px;
+}
+
+.case-ill-research {
+  width: 116px;
+  height: 180px;
+}
+
+.case-ill-scale {
+  width: 186px;
+  height: 96px;
+}
+
+.disney-figure {
+  margin: 20px 0 0;
+  width: 100%;
+  max-width: min(940px, calc(100% - (2 * var(--case-inset))));
+  padding: 0;
+  background: transparent;
+}
+
+.disney-brands-fit,
+.disney-atomic-fit,
+.disney-docs-fit,
+.case-map-fit {
+  container-type: inline-size;
+  position: relative;
+}
+
+.disney-brands-fit {
+  width: min(563px, 100%);
+  aspect-ratio: 563 / 276;
+  margin-inline: auto;
+}
+
+.disney-atomic-fit {
+  width: min(900px, 100%);
+  aspect-ratio: 900 / 313;
+}
+
+.disney-docs-fit {
+  width: min(874px, 100%);
+  aspect-ratio: 874 / 320;
+}
+
+.case-map-fit {
+  width: min(736px, 100%);
+  aspect-ratio: 736 / 314;
+  margin-inline: auto;
+}
+
+.disney-stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: top left;
+}
+
+.disney-brands-stage {
+  width: 563px;
+  height: 276px;
+  transform: scale(calc(100cqw / 563));
+}
+
+.disney-atomic-stage {
+  width: 900px;
+  height: 313px;
+  transform: scale(calc(100cqw / 900));
+}
+
+.disney-docs-stage {
+  width: 874px;
+  height: 320px;
+  transform: scale(calc(100cqw / 874));
+}
+
+.case-map-stage {
+  width: 736px;
+  height: 314px;
+  transform: scale(calc(100cqw / 736));
+}
+
+.disney-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.disney-brand-label,
+.disney-atomic-label,
+.case-map-names {
+  margin: 0;
+  font-family: "Schoolbell", cursive;
+  font-size: 12px;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.disney-brand-label {
+  position: absolute;
+}
+
+.disney-brand-cfo { left: 23px; top: 16px; width: 66px; text-align: right; }
+.disney-brand-finance { left: 0; top: 74px; width: 89px; text-align: right; }
+.disney-brand-security { left: 31px; top: 119px; width: 73px; text-align: right; }
+.disney-brand-cyber { left: 11px; top: 140px; width: 67px; text-align: right; }
+.disney-brand-learning { left: 21px; top: 233px; width: 76px; text-align: right; }
+.disney-brand-shareholders { left: 460px; top: 18px; width: 102px; }
+.disney-brand-risk { left: 460px; top: 74px; width: 81px; }
+.disney-brand-excess { left: 452px; top: 115px; width: 87px; }
+.disney-brand-legaluni { left: 489px; top: 135px; width: 74px; }
+.disney-brand-belonging { left: 455px; top: 242px; width: 77px; }
+
+.disney-brand-img {
+  position: absolute;
+  left: 156px;
+  width: 240px;
+  height: 52px;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+}
+
+.disney-brand-twdc { top: 0; }
+.disney-brand-finimg { top: 56px; }
+.disney-brand-legalimg { top: 112px; }
+.disney-brand-commsimg { top: 168px; }
+.disney-brand-hrimg { top: 224px; }
+
+.disney-atomic-label {
+  position: absolute;
+  text-align: center;
+}
+
+.disney-atomic-l-template { left: 12.5px; top: 0; width: 110px; }
+.disney-atomic-l-event { left: 224px; top: 47px; width: 102px; }
+.disney-atomic-l-module { left: 490px; top: 46px; width: 97px; }
+.disney-atomic-l-date { left: 760px; top: 10px; width: 81px; }
+.disney-atomic-l-time { left: 761px; top: 99px; width: 80px; }
+.disney-atomic-l-viewing { left: 711.5px; top: 209px; width: 179px; }
+
+.disney-atomic-stage img {
+  position: absolute;
+  display: block;
+  background: transparent;
+}
+
+.disney-atomic-template { left: 4px; top: 23px; width: 127.5px; height: 290px; }
+.disney-atomic-event { left: 175.5px; top: 87px; width: 199px; height: 92.5px; }
+.disney-atomic-module { left: 438.5px; top: 85.5px; width: 199px; height: 51.5px; }
+.disney-atomic-date { left: 701px; top: 50px; width: 199px; height: 38.5px; }
+.disney-atomic-time { left: 701px; top: 139px; width: 199px; height: 30.5px; }
+.disney-atomic-viewing { left: 701px; top: 249px; width: 199px; height: 48px; }
+
+.disney-atomic-outline {
+  position: absolute;
+  left: 0;
+  top: 110.5px;
+  width: 135.5px;
+  height: 46px;
+  border-radius: 4px;
+  background: rgba(28, 28, 26, 0.1);
+  border: 0.75px solid rgba(28, 28, 26, 0.32);
+  pointer-events: none;
+}
+
+.case-map-stage img {
+  position: absolute;
+  display: block;
+  object-fit: contain;
+  background: transparent;
+}
+
+.case-map-figma {
+  left: 0;
+  top: 97px;
+  width: 114px;
+  height: 38px;
+}
+
+.case-map-litmus {
+  left: 622px;
+  top: 102px;
+  width: 114px;
+  height: 39px;
+}
+
+.case-map-curve {
+  position: absolute;
+  overflow: visible;
+}
+
+.case-map-curve-l {
+  left: 146px;
+  top: 104px;
+  width: 90px;
+  height: 28px;
+}
+
+.case-map-curve-r {
+  left: 500px;
+  top: 110px;
+  width: 90px;
+  height: 28px;
+}
+
+.case-map-names {
+  position: absolute;
+  left: 268px;
+  top: 0;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+  line-height: 17px;
+}
+
+.case-map-names li {
+  position: relative;
+  height: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.case-map-names li:not(:last-child) {
+  margin-bottom: 16px;
+}
+
+.case-map-names li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  bottom: -5px;
+  height: 4px;
+  background: url("assets/disney-map-wave.png") center / 196px 4px no-repeat;
+  pointer-events: none;
+}
+
+.disney-docs-stage {
+  display: flex;
+  gap: 56px;
+}
+
+.disney-docs-stack {
+  position: relative;
+  width: 409px;
+  height: 320px;
+}
+
+.disney-doc-card {
+  position: absolute;
+  width: 265px;
+  height: 176px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid rgba(28, 28, 26, 0.32);
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.disney-docs-stack .disney-doc-card:nth-child(1) {
+  left: 0;
+  top: 0;
+}
+
+.disney-docs-stack .disney-doc-card:nth-child(2) {
+  left: 72px;
+  top: 72px;
+}
+
+.disney-docs-stack .disney-doc-card:nth-child(3) {
+  left: 144px;
+  top: 144px;
+}
+
+.disney-doc-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.impact {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+  align-self: stretch;
+  width: auto;
+  margin-inline: var(--case-inset);
+  padding: 24px 0;
+  border: 1px solid var(--chip);
+  border-radius: 20px;
+}
+
+.impact-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
+
+.impact-stat {
+  margin: 0;
+  width: 100%;
+  font-family: "Schoolbell", cursive;
+  font-size: 26px;
+  line-height: normal;
+}
+
+.impact-note {
+  margin: 0;
+  width: 100%;
+  font-size: 16px;
+  line-height: normal;
+  color: var(--body);
+}
+
 @media (max-width: 1280px) {
   .hero {
     flex-direction: column;
@@ -486,16 +1325,126 @@ button {
   }
 
   .stand,
+  .album-link,
   .portrait-wrap,
   .project,
+  .project-link,
   .about-copy {
     margin-inline: auto;
     justify-self: center;
   }
 
+  .project-preview {
+    left: 50%;
+    top: auto;
+    bottom: 0;
+    width: min(590px, calc(100% - 24px));
+    transform: translate(calc(-50% + var(--preview-shift)), 12px);
+  }
+
+  .record-row:has(.project-preview) {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    justify-content: center;
+    row-gap: 0;
+  }
+
+  .record-row:has(.project-preview) > * {
+    grid-column: 1;
+  }
+
+  .record-row:has(.project-preview) .stand {
+    grid-row: 1;
+    justify-self: center;
+    margin-bottom: var(--stack-gap-copy);
+  }
+
+  .record-row:has(.project-preview) .project-link,
+  .record-row:has(.project-preview) .project-preview {
+    grid-row: 2;
+    justify-self: center;
+  }
+
+  .record-row:has(.project-preview) .project-preview {
+    position: relative;
+    left: auto;
+    top: auto;
+    bottom: auto;
+    width: min(590px, calc(100% - 24px));
+    max-height: 0;
+    margin: 0;
+    transform: none;
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    border-width: 0;
+    border-color: var(--chip);
+    pointer-events: none;
+    transition:
+      opacity 0.28s ease,
+      visibility 0.28s,
+      border-width 0s linear 0.2s,
+      max-height 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.2s,
+      margin 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+    transition-delay: 0s;
+  }
+
+  .record-row:has(.project-preview):has(.project-link:hover) .project-preview,
+  .record-row:has(.project-preview):has(.project-preview:hover) .project-preview,
+  .record-row:has(.project-preview):has(.project-link:focus-within) .project-preview,
+  .record-row:has(.project-preview).is-previewing .project-preview {
+    --preview-shift: 0px;
+    max-height: min(360px, calc((100vw - 48px) * 9 / 16));
+    margin-bottom: var(--stack-gap-copy);
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+    border-width: 1px;
+    pointer-events: auto;
+    transition:
+      opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+      visibility 0.9s,
+      border-width 0s,
+      max-height 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+      margin 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: 0.45s;
+  }
+
+  .record-row:has(.project-preview) .project-link {
+    width: min(590px, calc(100% - 24px));
+    min-height: 0;
+    overflow: hidden;
+    max-height: 480px;
+    transition:
+      visibility 0.9s,
+      max-height 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: 0s;
+  }
+
+  .record-row:has(.project-preview):has(.project-link:hover) .project-link,
+  .record-row:has(.project-preview):has(.project-preview:hover) .project-link,
+  .record-row:has(.project-preview):has(.project-link:focus-within) .project-link,
+  .record-row:has(.project-preview).is-previewing .project-link {
+    animation: preview-copy-ack 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    visibility: hidden;
+    pointer-events: none;
+    max-height: 0;
+    transition-delay: 0.45s;
+  }
+
+  .preview-topics {
+    padding: 0 40px;
+  }
+
   .project {
     width: min(590px, 100%);
     text-align: left;
+  }
+
+  .project-link {
+    width: min(590px, 100%);
   }
 
   .about-copy {
@@ -512,6 +1461,20 @@ button {
 @media (max-width: 640px) {
   .clock {
     gap: 20px;
+  }
+
+  .case {
+    --case-inset: 20px;
+  }
+
+  .disney-overlay,
+  .case-map-curve,
+  .disney-atomic-outline {
+    display: none;
+  }
+
+  .case-map-names li:not(:last-child)::after {
+    display: none;
   }
 
   .chips {
@@ -550,8 +1513,132 @@ button {
   }
 }
 
+.cover-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+}
+
+.cover-viewer[hidden] {
+  display: none;
+}
+
+.cover-viewer-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.62);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.55s cubic-bezier(0.22, 0.82, 0.28, 1);
+}
+
+.cover-viewer.is-open .cover-viewer-backdrop {
+  opacity: 1;
+}
+
+.cover-viewer-piece {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  width: min(72vmin, 560px);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 12px;
+  opacity: 1;
+  transform-origin: center center;
+  transition:
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.55s cubic-bezier(0.22, 0.82, 0.28, 1);
+}
+
+.cover-viewer.is-closing .cover-viewer-piece {
+  opacity: 0;
+  transition: opacity 0.55s cubic-bezier(0.22, 0.82, 0.28, 1);
+}
+
+.cover-viewer-piece img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cover-viewer-blurb[hidden] {
+  display: none;
+}
+
+body.is-cover-open {
+  overflow: hidden;
+}
+
+body.is-cover-open .page,
+body.is-cover-open .clock {
+  pointer-events: none;
+}
+
+body.is-cover-open .album-vinyl {
+  transform: translateX(-126px);
+}
+
+.stand:has(.album.is-zoomed) .album-vinyl,
+.stand:has(.album.is-docking) .album-vinyl {
+  visibility: hidden;
+  opacity: 0;
+}
+
+body.is-cover-open .record-row .project-preview,
+body.is-cover-open .record-row:has(.project-preview):has(.project-link:hover) .project-preview,
+body.is-cover-open .record-row:has(.project-preview):has(.project-preview:hover) .project-preview,
+body.is-cover-open .record-row:has(.project-preview):has(.project-link:focus-within) .project-preview,
+body.is-cover-open .record-row:has(.project-preview).is-previewing .project-preview {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: none;
+}
+
+body.is-cover-open .album:hover,
+body.is-cover-open .album:focus-visible {
+  z-index: 2;
+  transform: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .album,
+  .cover-viewer-backdrop,
+  .cover-viewer-piece,
+  .cover-viewer.is-closing .cover-viewer-piece {
+    transition: none;
+  }
+
+  .album:hover,
+  .album:focus-visible {
+    transform: none;
+  }
+
   .album-vinyl {
     transition: none;
+  }
+
+  .project-preview {
+    transition: none;
+  }
+
+  .clock-digit-track {
+    transition: none !important;
+  }
+
+  body {
+    animation: none;
+    transition: none;
+  }
+
+  .record-row:has(.project-preview) .project-link {
+    animation: none;
   }
 }

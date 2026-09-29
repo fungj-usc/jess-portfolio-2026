@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;1,9..40,300&family=Schoolbell&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=preview68" />
   </head>
   <body>
     <header class="clock" aria-label="Local time in Boston">
@@ -43,91 +43,138 @@
       <section class="collection" id="collection">
         <header class="section-heading">
           <h2>my collection</h2>
-          <p>A mix of work and play</p>
+          <p>A few records from the archive</p>
         </header>
 
-        <article class="record-row" data-project="bose">
+        <article class="record-row" data-project="bose" id="bose">
           <div class="stand">
             <img class="shelf-back" src="assets/shelf-back.png" alt="" />
-            <img class="album-vinyl" src="assets/vinyl-bose.png" alt="" width="421" height="1024" />
-            <div class="album">
-              <img src="assets/album-bose.png" alt="Bose album cover: make life better with great sound" />
-            </div>
+            <img class="album-vinyl" src="assets/vinyl-bose.png?v=vinyl14" alt="" width="421" height="1024" />
+            <button class="album" type="button" data-album="bose" data-art="assets/cover-art-bose.jpg?v=orig6">
+              <img src="assets/album-bose.png?v=orig5" alt="Bose album cover: make life better with great sound" />
+            </button>
             <img class="shelf-front" src="assets/shelf-front.png" alt="" />
           </div>
-          <div class="project">
-            <p class="eyebrow">HARDWARE UX</p>
-            <h3>Designing feature experiences for Bose</h3>
-            <p class="summary">Audio sharing, hands-free interactions, and user-customizable controls</p>
-            <ul class="chips">
-              <li>journey mapping</li>
-              <li>product behaviors</li>
-              <li>multimodal feedback</li>
-              <li>ux specifications</li>
-            </ul>
+          <a class="project-link" href="bose.html">
+            <div class="project">
+              <p class="eyebrow">HARDWARE UX</p>
+              <h3>Designing feature experiences for Bose</h3>
+              <p class="summary">Hands-free interactions, user-customizable controls, and audio sharing</p>
+              <ul class="chips">
+                <li>journey mapping</li>
+                <li>product behaviors</li>
+                <li>multimodal feedback</li>
+                <li>ux specifications</li>
+              </ul>
+            </div>
+          </a>
+          <div class="project-preview" data-clips="assets/bose-preview-2.mp4,assets/bose-preview-3.mp4,assets/bose-preview-1.mp4">
+            <video class="preview-video" muted playsinline preload="metadata"></video>
+            <div class="preview-scrim"></div>
+            <nav class="preview-topics" aria-label="Bose case studies">
+              <div class="preview-topics-inner">
+                <a class="preview-topic" href="bose.html">hands-free interactions</a>
+                <span class="preview-topic is-disabled" aria-disabled="true">user-customizable controls (wip...)</span>
+                <span class="preview-topic is-disabled" aria-disabled="true">audio sharing (wip...)</span>
+              </div>
+            </nav>
           </div>
         </article>
 
-        <article class="record-row" data-project="disney">
+        <article class="record-row" data-project="disney" id="disney">
           <div class="stand">
             <img class="shelf-back" src="assets/shelf-back.png" alt="" />
-            <img class="album-vinyl" src="assets/vinyl-disney.png" alt="" width="421" height="1024" />
-            <div class="album">
-              <img src="assets/album-disney.png" alt="Disney album cover: project 002, The Walt Disney Company" />
-            </div>
+            <img class="album-vinyl" src="assets/vinyl-disney.png?v=vinyl14" alt="" width="421" height="1024" />
+            <button class="album" type="button" data-album="disney" data-art="assets/cover-art-disney.jpg?v=orig6">
+              <img src="assets/album-disney.png?v=orig5" alt="Disney album cover: project 002, The Walt Disney Company" />
+            </button>
             <img class="shelf-front" src="assets/shelf-front.png" alt="" />
           </div>
-          <div class="project">
-            <p class="eyebrow">DESIGN SYSTEMS</p>
-            <h3>Building a unified design system for Disney</h3>
-            <p class="summary">Modular components and standards for internal event communications</p>
-            <ul class="chips">
-              <li>design patterns</li>
-              <li>design tokens</li>
-              <li>system guidelines</li>
-            </ul>
+          <a class="project-link" href="disney.html">
+            <div class="project">
+              <p class="eyebrow">DESIGN SYSTEMS</p>
+              <h3>Building a unified design system for Disney</h3>
+              <p class="summary">Modular components and standards for internal event communications</p>
+              <ul class="chips">
+                <li>design patterns</li>
+                <li>design tokens</li>
+                <li>system guidelines</li>
+              </ul>
+            </div>
+          </a>
+          <div class="project-preview is-clean" data-clips="assets/disney-preview.mp4?v=cut10">
+            <video class="preview-video" muted playsinline loop preload="metadata"></video>
+            <div class="preview-scrim"></div>
+            <nav class="preview-topics" aria-label="Disney case studies">
+              <div class="preview-topics-inner">
+                <a class="preview-topic" href="disney.html">internal comms design system</a>
+              </div>
+            </nav>
           </div>
         </article>
 
-        <article class="record-row" data-project="spotify">
+        <article class="record-row" data-project="spotify" id="spotify">
           <div class="stand">
             <img class="shelf-back" src="assets/shelf-back.png" alt="" />
-            <img class="album-vinyl" src="assets/vinyl-spotify.png" alt="" width="421" height="1024" />
-            <div class="album">
-              <img src="assets/album-spotify.png" alt="Album cover 003: location-based music exploration, Sounds of Boston" />
-            </div>
+            <img class="album-vinyl" src="assets/vinyl-spotify.png?v=vinyl14" alt="" width="421" height="1024" />
+            <button class="album" type="button" data-album="spotify" data-art="assets/cover-art-spotify.png?v=orig6">
+              <img src="assets/album-spotify.png?v=orig5" alt="Album cover 003: location-based music exploration, Sounds of Boston" />
+            </button>
             <img class="shelf-front" src="assets/shelf-front.png" alt="" />
           </div>
-          <div class="project">
-            <p class="eyebrow">UX EXPLORATION</p>
-            <h3>Exploring personalized music discovery for Spotify</h3>
-            <p class="summary">A concept for supporting cultural immersion through music</p>
-            <ul class="chips">
-              <li>feature discovery</li>
-              <li>market research</li>
-              <li>prototyping</li>
-            </ul>
+          <a class="project-link" href="#spotify">
+            <div class="project">
+              <p class="eyebrow">UX EXPLORATION</p>
+              <h3>Exploring personalized music discovery for Spotify</h3>
+              <p class="summary">A concept for supporting cultural immersion through music</p>
+              <ul class="chips">
+                <li>feature discovery</li>
+                <li>market research</li>
+                <li>prototyping</li>
+              </ul>
+            </div>
+          </a>
+          <div class="project-preview is-pulse" data-clips="assets/spotify-preview.mp4?v=zoom1">
+            <video class="preview-video" muted playsinline loop preload="metadata"></video>
+            <div class="preview-scrim"></div>
+            <nav class="preview-topics" aria-label="Spotify case studies">
+              <div class="preview-topics-inner">
+                <span class="preview-topic is-disabled" aria-disabled="true">personalized music discovery feature (wip...)</span>
+              </div>
+            </nav>
           </div>
         </article>
 
-        <article class="record-row" data-project="tide">
+        <article class="record-row" data-project="tide" id="tide">
           <div class="stand">
             <img class="shelf-back" src="assets/shelf-back.png" alt="" />
-            <img class="album-vinyl" src="assets/vinyl-tide.png" alt="" width="424" height="1024" />
-            <div class="album">
-              <img src="assets/album-tide.png" alt="Album cover 004: tide and AT&amp;T national student advertising competition" />
-            </div>
+            <img class="album-vinyl" src="assets/vinyl-tide.png?v=vinyl14" alt="" width="421" height="1024" />
+            <button class="album" type="button" data-album="tide" data-art="assets/cover-art-tide.png?v=orig6">
+              <img src="assets/album-tide.png?v=orig5" alt="Album cover 004: tide and AT&amp;T national student advertising competition" />
+            </button>
             <img class="shelf-front" src="assets/shelf-front.png" alt="" />
           </div>
-          <div class="project">
-            <p class="eyebrow">VISUAL DESIGN</p>
-            <h3>X</h3>
-            <p class="summary">Core visuals for out-of-home and experiential brand activations</p>
-            <ul class="chips">
-              <li>X</li>
-              <li>X</li>
-              <li>X</li>
-            </ul>
+          <a class="project-link" href="#tide">
+            <div class="project">
+              <p class="eyebrow">VISUAL DESIGN</p>
+              <h3>X</h3>
+              <p class="summary">Core visuals for out-of-home and experiential brand activations</p>
+              <ul class="chips">
+                <li>X</li>
+                <li>X</li>
+                <li>X</li>
+              </ul>
+            </div>
+          </a>
+          <div class="project-preview is-clean" data-clips="assets/tide-preview-2.mp4?v=curl9,assets/tide-preview-1.mp4?v=curl9">
+            <video class="preview-video" muted playsinline preload="metadata"></video>
+            <div class="preview-scrim"></div>
+            <nav class="preview-topics" aria-label="NSAC plansbooks">
+              <div class="preview-topics-inner">
+                <span class="preview-topic is-disabled" aria-disabled="true">at&amp;t "connecting changes everything" (wip...)</span>
+                <span class="preview-topic is-disabled" aria-disabled="true">tide "care on cold" (wip...)</span>
+              </div>
+            </nav>
           </div>
         </article>
       </section>
@@ -163,6 +210,14 @@
       </footer>
     </div>
 
-    <script src="app.js?v=still"></script>
+    <div class="cover-viewer" hidden>
+      <button class="cover-viewer-backdrop" type="button" aria-label="Close album cover"></button>
+      <figure class="cover-viewer-piece">
+        <img alt="" />
+        <figcaption class="cover-viewer-blurb" hidden></figcaption>
+      </figure>
+    </div>
+
+    <script src="app.js?v=preview31"></script>
   </body>
 </html>
