@@ -561,3 +561,76 @@ if (!reduceMotion.matches) {
     document.body.classList.remove("is-leaving");
   });
 }
+
+function initHeavyScroll() {
+  if (reduceMotion.matches) return;
+
+  const strength = 0.7;
+  const ease = 0.2;
+  let current = window.scrollY;
+  let target = window.scrollY;
+  let ticking = false;
+
+  function maxScroll() {
+    return Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+  }
+
+  function nestedScrolls(node, delta) {
+    let el = node instanceof Element ? node : null;
+    while (el && el !== document.documentElement) {
+      const style = window.getComputedStyle(el);
+      const overflowY = style.overflowY;
+      if ((overflowY === "auto" || overflowY === "scroll") && el.scrollHeight > el.clientHeight + 1) {
+        const top = el.scrollTop;
+        const atStart = top <= 0;
+        const atEnd = top + el.clientHeight >= el.scrollHeight - 1;
+        if ((delta < 0 && !atStart) || (delta > 0 && !atEnd)) return true;
+      }
+      el = el.parentElement;
+    }
+    return false;
+  }
+
+  function step() {
+    current += (target - current) * ease;
+    if (Math.abs(target - current) < 0.4) {
+      current = target;
+      ticking = false;
+    } else {
+      ticking = true;
+      requestAnimationFrame(step);
+    }
+    window.scrollTo({ top: current, behavior: "instant" });
+  }
+
+  window.addEventListener(
+    "wheel",
+    (event) => {
+      if (event.ctrlKey || event.defaultPrevented) return;
+      let delta = event.deltaY;
+      if (event.deltaMode === 1) delta *= 16;
+      if (event.deltaMode === 2) delta *= window.innerHeight;
+      if (nestedScrolls(event.target, delta)) return;
+      event.preventDefault();
+      target = Math.max(0, Math.min(maxScroll(), target + delta * strength));
+      if (!ticking) {
+        current = window.scrollY;
+        step();
+      }
+    },
+    { passive: false }
+  );
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        current = window.scrollY;
+        target = window.scrollY;
+      }
+    },
+    { passive: true }
+  );
+}
+
+initHeavyScroll();
