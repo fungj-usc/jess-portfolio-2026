@@ -1,5 +1,74 @@
 const timeEl = document.getElementById("boston-time");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const GATE_KEY = "jess-site-gate";
+const GATE_HASH = "718a1eb9069acf4850af5c540f757e19cd555d8131f7533f42a2b931a18a411a";
+
+async function sha256Hex(value) {
+  const bytes = new TextEncoder().encode(value);
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+function unlockSite() {
+  document.documentElement.classList.remove("is-gated");
+  document.querySelector(".site-gate")?.remove();
+}
+
+function initSiteGate() {
+  let unlocked = false;
+  try {
+    unlocked = sessionStorage.getItem(GATE_KEY) === "ok";
+  } catch (err) {
+    unlocked = false;
+  }
+
+  if (unlocked) {
+    unlockSite();
+    return;
+  }
+
+  document.documentElement.classList.add("is-gated");
+
+  const gate = document.createElement("div");
+  gate.className = "site-gate";
+  gate.innerHTML = `
+    <form class="site-gate-card" autocomplete="off">
+      <p class="site-gate-label">this site is password protected</p>
+      <div class="site-gate-row">
+        <input class="site-gate-input" type="password" name="password" placeholder="Password" aria-label="Password" required />
+        <button class="site-gate-submit" type="submit">Enter</button>
+      </div>
+      <p class="site-gate-error" role="alert"></p>
+    </form>
+  `;
+  document.body.append(gate);
+
+  const form = gate.querySelector("form");
+  const input = gate.querySelector(".site-gate-input");
+  const error = gate.querySelector(".site-gate-error");
+  input.focus();
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const hash = await sha256Hex(input.value.trim());
+    if (hash !== GATE_HASH) {
+      error.textContent = "Wrong password";
+      gate.classList.remove("is-wrong");
+      void gate.offsetWidth;
+      gate.classList.add("is-wrong");
+      input.select();
+      return;
+    }
+    try {
+      sessionStorage.setItem(GATE_KEY, "ok");
+    } catch (err) {
+      /* keep the tab unlocked even if storage is blocked */
+    }
+    unlockSite();
+  });
+}
+
+initSiteGate();
 
 function formatBostonTime(date = new Date()) {
   return new Intl.DateTimeFormat("en-US", {

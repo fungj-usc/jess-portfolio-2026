@@ -10,7 +10,16 @@
       href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;1,9..40,300&family=Schoolbell&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=preview71" />
+    <link rel="stylesheet" href="styles.css?v=preview72" />
+    <script>
+      try {
+        if (sessionStorage.getItem("jess-site-gate") !== "ok") {
+          document.documentElement.classList.add("is-gated");
+        }
+      } catch (err) {
+        document.documentElement.classList.add("is-gated");
+      }
+    </script>
   </head>
   <body>
     <header class="clock" aria-label="Local time in Boston">
@@ -157,8 +166,8 @@
           <a class="project-link" href="#tide">
             <div class="project">
               <p class="eyebrow">VISUAL DESIGN</p>
-              <h3>X</h3>
-              <p class="summary">Core visuals for out-of-home and experiential brand activations</p>
+              <h3>Directing core visuals for out-of-home and experiential brand activations</h3>
+              <p class="summary">Building brand love for AT&amp;T among Gen Z, Increasing cold-water laundry loads in the United States for Tide.</p>
               <ul class="chips">
                 <li>X</li>
                 <li>X</li>
@@ -218,6 +227,6 @@
       </figure>
     </div>
 
-    <script src="app.js?v=preview32"></script>
+    <script src="app.js?v=preview33"></script>
   </body>
 </html>
