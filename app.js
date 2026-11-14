@@ -703,3 +703,29 @@ function initHeavyScroll() {
 }
 
 initHeavyScroll();
+
+function initDisneyScale() {
+  const stages = document.querySelectorAll(".disney-stage");
+  if (!stages.length) return;
+
+  const natives = new Map();
+  stages.forEach((stage) => {
+    stage.style.transform = "none";
+    natives.set(stage, stage.offsetWidth || 1);
+  });
+
+  const layout = () => {
+    stages.forEach((stage) => {
+      const fit = stage.parentElement;
+      const native = natives.get(stage) || 1;
+      const scale = Math.min(1, fit.clientWidth / native);
+      stage.style.transform = `scale(${scale})`;
+    });
+  };
+
+  const observer = new ResizeObserver(layout);
+  stages.forEach((stage) => observer.observe(stage.parentElement));
+  layout();
+}
+
+initDisneyScale();
