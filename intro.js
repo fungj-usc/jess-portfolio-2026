@@ -54,6 +54,12 @@
   skipBtn.textContent = "skip intro";
   document.body.appendChild(skipBtn);
 
+  const stageHit = document.createElement("button");
+  stageHit.type = "button";
+  stageHit.className = "intro-stage-hit";
+  stageHit.setAttribute("aria-label", "Skip to drop the needle");
+  document.body.appendChild(stageHit);
+
   let phase = "idle";
   const timers = [];
   const later = (fn, ms) => timers.push(setTimeout(fn, ms));
@@ -127,6 +133,7 @@
     player.classList.add("drawing-static");
     prompt.remove();
     skipBtn.remove();
+    stageHit.remove();
     unlockScroll();
     window.removeEventListener("keydown", onKey);
   }
@@ -145,6 +152,18 @@
     if (SCROLL_KEYS.has(event.key)) event.preventDefault();
   }
 
+  function showWait() {
+    if (phase !== "drawing") return;
+    clearTimers();
+    phase = "wait";
+    player.classList.add("drawing-static");
+    player.querySelectorAll(".intro-case-strokes path, .intro-scrib").forEach((el) => {
+      el.style.animationPlayState = "paused";
+    });
+    root.classList.add("intro-wait");
+    later(settle, WAIT_FOR_PRESS_MS);
+  }
+
   function start() {
     if (phase !== "idle") return;
     phase = "drawing";
@@ -155,12 +174,14 @@
     player.querySelectorAll(".intro-case-strokes path, .intro-scrib").forEach((el) => {
       el.style.animationPlayState = "running";
     });
-    later(() => {
-      phase = "wait";
-      root.classList.add("intro-wait");
-      later(settle, WAIT_FOR_PRESS_MS);
-    }, DRAW_DONE_MS);
+    later(showWait, DRAW_DONE_MS);
   }
+
+  stageHit.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    showWait();
+  });
 
   // Pressing the disc: app.js starts Blackbird and the spinning record;
   // here we drop the needle and let the notes play for a moment.

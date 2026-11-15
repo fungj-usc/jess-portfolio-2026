@@ -284,8 +284,23 @@ html.intro.intro-wait .intro-prompt {
 .intro-skip:hover { border-color: var(--ink); }
 html.intro:not(.intro-settle):not(.is-gated) .intro-skip { display: block; }
 
-/* Only the disc accepts clicks while the record player draws itself. */
-html.intro:not(.intro-wait) .disc-hit { pointer-events: none; }
+.intro-stage-hit {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 25;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+html.intro:not(.intro-wait):not(.intro-drop):not(.intro-settle):not(.is-gated) .intro-stage-hit {
+  display: block;
+}
+
+html.intro.intro-drop .disc-hit,
+html.intro.intro-settle .disc-hit { pointer-events: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .intro-case-strokes path,
