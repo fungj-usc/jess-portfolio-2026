@@ -156,7 +156,8 @@ html.intro.intro-settle .player {
   position: relative;
   left: auto;
   top: auto;
-  transform: none;
+  z-index: 20;
+  transform-origin: center center;
 }
 
 /* Everything else waits off-stage until the record player settles. */
