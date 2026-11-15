@@ -482,11 +482,9 @@ a {
 .section-heading h2,
 .about h2,
 .case h1,
-.case-kicker,
 .case-section h2,
 .case-section h3,
 .case-prompt,
-.impact-stat,
 .site-gate-label {
   letter-spacing: var(--tracking);
 }
@@ -959,9 +957,11 @@ a {
 
 .case-kicker {
   margin: 0;
-  font-family: "jessicafont", cursive;
-  font-size: var(--font-title);
-  line-height: normal;
+  font-family: "DM Sans", sans-serif;
+  font-size: var(--font-body);
+  font-weight: 300;
+  line-height: 1.4;
+  color: var(--body);
 }
 
 .case-intro {
@@ -1391,9 +1391,11 @@ a {
 .impact-stat {
   margin: 0;
   width: 100%;
-  font-family: "jessicafont", cursive;
-  font-size: var(--font-title);
-  line-height: normal;
+  font-family: "DM Sans", sans-serif;
+  font-size: var(--font-body);
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--ink);
 }
 
 .impact-note {
