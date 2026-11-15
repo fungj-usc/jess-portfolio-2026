@@ -56,35 +56,21 @@
   const timers = [];
   const later = (fn, ms) => timers.push(setTimeout(fn, ms));
   const clearTimers = () => { timers.forEach(clearTimeout); timers.length = 0; };
+  const SCROLL_KEYS = new Set([" ", "ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End"]);
 
-  function centerPlayer() {
-    // Measure the player in its normal spot, then move it to the screen centre.
-    root.style.setProperty("--intro-dx", "0px");
-    root.style.setProperty("--intro-dy", "0px");
-    const small = window.innerWidth <= 700;
-    root.style.setProperty("--intro-scale", small ? "1" : "1.35");
-    const prev = player.style.transition;
-    player.style.transition = "none";
-    player.style.transform = "none";
-    const r = player.getBoundingClientRect();
-    player.style.transform = "";
-    void player.offsetWidth;
-    player.style.transition = prev;
-    const dx = window.innerWidth / 2 - (r.left + r.width / 2);
-    const dy = window.innerHeight / 2 - (r.top + r.height / 2);
-    root.style.setProperty("--intro-dx", dx + "px");
-    root.style.setProperty("--intro-dy", dy + "px");
+  function preventScroll(event) {
+    event.preventDefault();
   }
 
-  function placePrompt() {
-    const r = player.getBoundingClientRect();
-    if (window.innerWidth <= 700) {
-      prompt.style.left = r.left + r.width / 2 - prompt.offsetWidth / 2 + "px";
-      prompt.style.top = r.bottom + 12 + "px";
-    } else {
-      prompt.style.left = r.right + "px";
-      prompt.style.top = r.top + r.height / 2 + 4 + "px";
-    }
+  function lockScroll() {
+    window.scrollTo(0, 0);
+    window.addEventListener("wheel", preventScroll, { passive: false });
+    window.addEventListener("touchmove", preventScroll, { passive: false });
+  }
+
+  function unlockScroll() {
+    window.removeEventListener("wheel", preventScroll);
+    window.removeEventListener("touchmove", preventScroll);
   }
 
   function markSeen() {
@@ -105,14 +91,11 @@
     clearTimers();
     phase = "done";
     root.classList.remove("intro", "intro-wait", "intro-drop", "intro-settle");
-    root.style.removeProperty("--intro-dx");
-    root.style.removeProperty("--intro-dy");
-    root.style.removeProperty("--intro-scale");
     player.classList.add("drawing-static");
     prompt.remove();
     skipBtn.remove();
+    unlockScroll();
     window.removeEventListener("keydown", onKey);
-    window.removeEventListener("resize", onResize);
   }
 
   function skip() {
@@ -121,18 +104,19 @@
     finish();
   }
 
-  function onKey(event) { if (event.key === "Escape") skip(); }
-  function onResize() {
-    if (phase === "drawing" || phase === "wait") { centerPlayer(); placePrompt(); }
+  function onKey(event) {
+    if (event.key === "Escape") {
+      skip();
+      return;
+    }
+    if (SCROLL_KEYS.has(event.key)) event.preventDefault();
   }
 
   function start() {
     if (phase !== "idle") return;
     phase = "drawing";
-    window.scrollTo(0, 0);
+    lockScroll();
     window.addEventListener("keydown", onKey);
-    window.addEventListener("resize", onResize);
-    centerPlayer();
     player.classList.add("is-drawing");
     // restart the stroke animations from zero now that the page is visible
     player.querySelectorAll(".intro-case-strokes path, .intro-scrib").forEach((el) => {
@@ -141,7 +125,6 @@
     later(() => {
       phase = "wait";
       root.classList.add("intro-wait");
-      placePrompt();
       later(settle, WAIT_FOR_PRESS_MS);
     }, DRAW_DONE_MS);
   }

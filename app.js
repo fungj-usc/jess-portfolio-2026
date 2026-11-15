@@ -676,6 +676,13 @@ function initHeavyScroll() {
   window.addEventListener(
     "wheel",
     (event) => {
+      if (
+        document.documentElement.classList.contains("intro") &&
+        !document.documentElement.classList.contains("intro-settle")
+      ) {
+        event.preventDefault();
+        return;
+      }
       if (event.ctrlKey || event.defaultPrevented) return;
       let delta = event.deltaY;
       if (event.deltaMode === 1) delta *= 16;

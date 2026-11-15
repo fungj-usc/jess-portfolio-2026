@@ -112,23 +112,55 @@
 
 /* ---- Opening stage ------------------------------------------------------ */
 
-html.intro:not(.intro-settle),
-html.intro:not(.intro-settle) body { overflow: hidden; }
-
-html.intro .player {
-  z-index: 20;
-  transform: translate(var(--intro-dx, 0px), var(--intro-dy, 0px)) scale(var(--intro-scale, 1.35));
-  transition: transform 1.05s cubic-bezier(0.65, 0, 0.35, 1);
+html.intro {
+  --intro-scale: 1.2;
+  --intro-player-scale: 0.87;
+  --intro-player-w: calc(20.25rem * var(--intro-player-scale));
+  --intro-player-h: calc(20.1875rem * var(--intro-player-scale));
 }
 
-html.intro.intro-settle .player { transform: none; }
+@media (max-width: 700px) {
+  html.intro { --intro-scale: 1; }
+}
+
+html.intro:not(.intro-settle),
+html.intro:not(.intro-settle) body {
+  overflow: hidden !important;
+  height: 100%;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+
+html.intro:not(.intro-settle) .page {
+  overflow: visible;
+}
+
+html.intro:not(.intro-settle) .player {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 20;
+  margin: 0;
+  transform: translate(-50%, -50%) scale(var(--intro-scale));
+  transform-origin: center center;
+}
+
+html.intro.intro-settle .player {
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+}
 
 /* Everything else waits off-stage until the record player settles. */
 html.intro:not(.intro-settle) .clock,
 html.intro:not(.intro-settle) .hero-copy,
 html.intro:not(.intro-settle) .collection,
 html.intro:not(.intro-settle) .about,
-html.intro:not(.intro-settle) .site-footer { opacity: 0; }
+html.intro:not(.intro-settle) .site-footer {
+  opacity: 0;
+  pointer-events: none;
+}
 
 html.intro.intro-settle .hero-copy h1 { animation: intro-write 1s cubic-bezier(0.6, 0.05, 0.3, 1) 0.7s both; }
 html.intro.intro-settle .hero-copy .lede { animation: intro-fade 0.6s ease 1.05s both; }
@@ -171,6 +203,8 @@ html.intro.intro-settle:not(.intro-drop) .player-needle {
 
 .intro-prompt {
   position: fixed;
+  left: 50%;
+  top: 50%;
   z-index: 30;
   display: none;
   align-items: center;
@@ -184,7 +218,6 @@ html.intro.intro-settle:not(.intro-drop) .player-needle {
   color: var(--body);
   white-space: nowrap;
   pointer-events: none;
-  transform-origin: 0 50%;
 }
 
 .intro-prompt img {
@@ -197,18 +230,27 @@ html.intro.intro-settle:not(.intro-drop) .player-needle {
 
 html.intro.intro-wait .intro-prompt {
   display: flex;
-  animation: intro-pop 0.5s cubic-bezier(0.3, 1.6, 0.5, 1) 0.1s both;
+  transform: translate(calc(var(--intro-player-w) * var(--intro-scale) / 2 + 16px), 8px);
+  animation: intro-pop-side 0.5s cubic-bezier(0.3, 1.6, 0.5, 1) 0.1s both;
 }
 
-@keyframes intro-pop {
-  from { opacity: 0; transform: scale(0.55) translateX(-8px); }
-  to   { opacity: 1; transform: none; }
+@keyframes intro-pop-side {
+  from { opacity: 0; transform: translate(calc(var(--intro-player-w) * var(--intro-scale) / 2 + 8px), 8px) scale(0.55); }
+  to   { opacity: 1; transform: translate(calc(var(--intro-player-w) * var(--intro-scale) / 2 + 16px), 8px); }
 }
 
-/* On phones the prompt sits under the record player. */
 @media (max-width: 700px) {
-  .intro-prompt { transform-origin: 50% 0; }
   .intro-prompt img { transform: rotate(80deg); }
+
+  html.intro.intro-wait .intro-prompt {
+    transform: translate(-50%, calc(var(--intro-player-h) * var(--intro-scale) / 2 + 18px));
+    animation-name: intro-pop-below;
+  }
+}
+
+@keyframes intro-pop-below {
+  from { opacity: 0; transform: translate(-50%, calc(var(--intro-player-h) * var(--intro-scale) / 2 + 10px)) scale(0.55); }
+  to   { opacity: 1; transform: translate(-50%, calc(var(--intro-player-h) * var(--intro-scale) / 2 + 18px)); }
 }
 
 /* ---- Skip --------------------------------------------------------------- */

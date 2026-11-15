@@ -1795,14 +1795,14 @@ html.is-gated .case-home {
   inset: 0;
   z-index: 1000;
   display: none;
-  align-items: center;
-  justify-content: center;
+  place-items: center;
+  place-content: center;
   padding: 1.5rem;
-  overflow-x: auto;
+  overflow: hidden;
 }
 
 html.is-gated .site-gate {
-  display: flex;
+  display: grid;
 }
 
 .site-gate-card {
@@ -1810,9 +1810,11 @@ html.is-gated .site-gate {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
   width: max-content;
-  max-width: 100%;
+  max-width: calc(100vw - 3rem);
+  margin: 0;
 }
 
 .site-gate-label {
