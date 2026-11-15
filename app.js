@@ -12,6 +12,7 @@ async function sha256Hex(value) {
 function unlockSite() {
   document.documentElement.classList.remove("is-gated");
   document.querySelector(".site-gate")?.remove();
+  document.dispatchEvent(new Event("site:unlocked"));
 }
 
 function initSiteGate() {
@@ -35,8 +36,8 @@ function initSiteGate() {
     <form class="site-gate-card" autocomplete="off">
       <p class="site-gate-label">this site is password protected</p>
       <div class="site-gate-row">
-        <input class="site-gate-input" type="password" name="password" placeholder="Password" aria-label="Password" required />
-        <button class="site-gate-submit" type="submit">Enter</button>
+        <input class="site-gate-input" type="password" name="password" placeholder="password" aria-label="Password" required />
+        <button class="site-gate-submit" type="submit">enter</button>
       </div>
       <p class="site-gate-error" role="alert"></p>
     </form>

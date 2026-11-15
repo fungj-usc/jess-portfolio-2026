@@ -1,0 +1,243 @@
+/* ==========================================================================
+   Drop-the-needle opening
+   The record player draws itself with Jessica's real Figma strokes, waits for
+   the visitor to press the disc, drops the needle, then settles into the page.
+   Plays once per browser session. Respects prefers-reduced-motion.
+   ========================================================================== */
+
+/* ---- The drawn record player (added by intro.js) ------------------------ */
+
+/* Positioned as a percentage of the player box so it always lines up with
+   the existing case/record images, whatever the rem size is. */
+.player .intro-svg {
+  position: absolute;
+  left: -15.749%;
+  top: -12.046%;
+  width: 117.48%;
+  height: 113.42%;
+  overflow: visible;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.player .intro-rec-svg { z-index: 0; }
+.player .intro-case-svg { z-index: 2; }
+
+/* Once the drawing exists it replaces the case PNG and the still record,
+   so there is only ever one copy of each on screen (no doubled lines). */
+.player.has-drawing .player-case { opacity: 0; }
+.player.has-drawing:not(.is-playing) .player-record { opacity: 0; }
+.player.has-drawing.is-playing .intro-rec-img { opacity: 0; }
+
+/* Needle pivots from where the tone arm attaches. */
+.player-needle { transform-origin: 92% 40%; }
+
+/* ---- Only the disc is clickable ----------------------------------------- */
+
+.player { cursor: default; pointer-events: none; }
+
+.player .disc-hit {
+  position: absolute;
+  left: 15.87%;
+  top: 37.38%;
+  width: 64.53%;
+  height: 41.88%;
+  border-radius: 50%;
+  z-index: 5;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* Hover: the drawing lightens a little. */
+.player.has-drawing:has(.disc-hit:hover) .intro-svg,
+.player.has-drawing:focus-visible .intro-svg { opacity: 0.8; }
+
+/* Music notes only show while the record is playing. */
+.player-notes {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.player.is-playing .player-notes {
+  opacity: 1;
+  animation: intro-notes-in 0.6s cubic-bezier(0.3, 1.5, 0.5, 1) 0.45s both;
+}
+
+@keyframes intro-notes-in {
+  from { opacity: 0; transform: rotate(-25deg) scale(0.4) translateY(30px); }
+  to   { opacity: 1; transform: rotate(-25deg); }
+}
+
+/* ---- Stroke drawing ----------------------------------------------------- */
+
+.intro-case-strokes path,
+.intro-scrib {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation-name: intro-draw;
+  animation-fill-mode: both;
+}
+
+.intro-case-strokes path { animation-timing-function: cubic-bezier(0.4, 0.1, 0.6, 0.9); }
+.intro-scrib { animation-timing-function: cubic-bezier(0.25, 0.15, 0.6, 1); }
+
+/* Jessica's scribble loops back over finished parts of the ring; this pacing
+   hurries through those loops so something new is drawn on every frame. */
+.intro-scrib2 { animation-name: intro-scribble; animation-timing-function: linear; }
+
+@keyframes intro-draw {
+  0%   { stroke-dashoffset: 1; opacity: 0; }
+  1%   { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 1; }
+}
+
+@keyframes intro-scribble {
+  0%    { stroke-dashoffset: 1; opacity: 0; }
+  0.5%  { opacity: 1; }
+  3%    { stroke-dashoffset: 0.96; }
+  55.8% { stroke-dashoffset: 0.7; }
+  59.4% { stroke-dashoffset: 0.58; }
+  83.6% { stroke-dashoffset: 0.4; }
+  87.5% { stroke-dashoffset: 0.15; }
+  97.5% { stroke-dashoffset: 0.105; }
+  100%  { stroke-dashoffset: 0; opacity: 1; }
+}
+
+/* Drawn instantly (returning visitors who skip, reduced motion). */
+.player.drawing-static .intro-case-strokes path,
+.player.drawing-static .intro-scrib {
+  animation: none;
+  stroke-dashoffset: 0;
+  opacity: 1;
+}
+
+/* ---- Opening stage ------------------------------------------------------ */
+
+html.intro:not(.intro-settle),
+html.intro:not(.intro-settle) body { overflow: hidden; }
+
+html.intro .player {
+  z-index: 20;
+  transform: translate(var(--intro-dx, 0px), var(--intro-dy, 0px)) scale(var(--intro-scale, 1.35));
+  transition: transform 1.05s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+html.intro.intro-settle .player { transform: none; }
+
+/* Everything else waits off-stage until the record player settles. */
+html.intro:not(.intro-settle) .clock,
+html.intro:not(.intro-settle) .hero-copy,
+html.intro:not(.intro-settle) .collection,
+html.intro:not(.intro-settle) .about,
+html.intro:not(.intro-settle) .site-footer { opacity: 0; }
+
+html.intro.intro-settle .hero-copy h1 { animation: intro-write 1s cubic-bezier(0.6, 0.05, 0.3, 1) 0.7s both; }
+html.intro.intro-settle .hero-copy .lede { animation: intro-fade 0.6s ease 1.05s both; }
+html.intro.intro-settle .hero-copy .roles { animation: intro-fade 0.6s ease 1.2s both; }
+html.intro.intro-settle .clock { animation: intro-fade 0.6s ease 1.4s both; }
+html.intro.intro-settle .collection,
+html.intro.intro-settle .about,
+html.intro.intro-settle .site-footer { animation: intro-fade 0.6s ease 1.6s both; }
+
+@keyframes intro-write {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes intro-fade {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Needle stays off the record until the disc is pressed. */
+html.intro:not(.intro-drop):not(.intro-settle) .player-needle { opacity: 0; }
+
+html.intro.intro-drop .player-needle {
+  animation: intro-needle-drop 0.65s cubic-bezier(0.5, 0, 0.3, 1.4) both;
+}
+
+/* No press before the timer runs out: the needle lowers quietly. */
+html.intro.intro-settle:not(.intro-drop) .player-needle {
+  animation: intro-needle-drop 0.5s ease both;
+}
+
+@keyframes intro-needle-drop {
+  from { transform: rotate(26deg) translateY(-3px); opacity: 0; }
+  30%  { opacity: 1; }
+  70%  { transform: rotate(-0.6deg) translateY(1px); }
+  to   { transform: rotate(-1.16deg); opacity: 1; }
+}
+
+/* ---- "drop the needle" prompt ------------------------------------------- */
+
+.intro-prompt {
+  position: fixed;
+  z-index: 30;
+  display: none;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  font-family: "jessicafont", cursive;
+  font-size: var(--font-body);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0;
+  color: var(--body);
+  white-space: nowrap;
+  pointer-events: none;
+  transform-origin: 0 50%;
+}
+
+.intro-prompt img {
+  width: 34px;
+  height: auto;
+  margin-top: 5px;
+  opacity: 0.85;
+  transform: rotate(3deg);
+}
+
+html.intro.intro-wait .intro-prompt {
+  display: flex;
+  animation: intro-pop 0.5s cubic-bezier(0.3, 1.6, 0.5, 1) 0.1s both;
+}
+
+@keyframes intro-pop {
+  from { opacity: 0; transform: scale(0.55) translateX(-8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* On phones the prompt sits under the record player. */
+@media (max-width: 700px) {
+  .intro-prompt { transform-origin: 50% 0; }
+  .intro-prompt img { transform: rotate(80deg); }
+}
+
+/* ---- Skip --------------------------------------------------------------- */
+
+.intro-skip {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 30;
+  display: none;
+  min-height: 40px;
+  padding: 10px 16px;
+  border: 1px solid rgba(28, 28, 26, 0.25);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--body);
+  font-family: "DM Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+
+.intro-skip:hover { border-color: var(--ink); }
+html.intro:not(.intro-settle):not(.is-gated) .intro-skip { display: block; }
+
+/* Only the disc accepts clicks while the record player draws itself. */
+html.intro:not(.intro-wait) .disc-hit { pointer-events: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-case-strokes path,
+  .intro-scrib { animation: none; stroke-dashoffset: 0; opacity: 1; }
+}

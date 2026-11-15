@@ -10,7 +10,8 @@
       href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;1,9..40,300&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=type72" />
+    <link rel="stylesheet" href="styles.css?v=type80" />
+    <link rel="stylesheet" href="intro.css?v=needle2" />
     <script>
       try {
         if (sessionStorage.getItem("jess-site-gate") !== "ok") {
@@ -18,6 +19,23 @@
         }
       } catch (err) {
         document.documentElement.classList.add("is-gated");
+      }
+    </script>
+    <script>
+      try {
+        var forceIntro = new URLSearchParams(window.location.search).has("intro");
+        if (forceIntro) {
+          try { sessionStorage.removeItem("jess-intro"); } catch (err) { /* ignore */ }
+        }
+        if (
+          !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+          (forceIntro || sessionStorage.getItem("jess-intro") !== "seen") &&
+          !window.location.hash
+        ) {
+          document.documentElement.classList.add("intro");
+        }
+      } catch (err) {
+        /* storage blocked: just show the page */
       }
     </script>
   </head>
@@ -235,6 +253,7 @@
       </figure>
     </div>
 
-    <script src="app.js?v=preview34"></script>
+    <script src="app.js?v=preview37"></script>
+    <script src="intro.js?v=needle3"></script>
   </body>
 </html>
