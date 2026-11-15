@@ -58,19 +58,32 @@
   const clearTimers = () => { timers.forEach(clearTimeout); timers.length = 0; };
   const SCROLL_KEYS = new Set([" ", "ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End"]);
 
+  let scrollLocked = false;
+
   function preventScroll(event) {
     event.preventDefault();
   }
 
+  function keepTop() {
+    if (window.scrollY) window.scrollTo(0, 0);
+  }
+
   function lockScroll() {
     window.scrollTo(0, 0);
-    window.addEventListener("wheel", preventScroll, { passive: false });
-    window.addEventListener("touchmove", preventScroll, { passive: false });
+    if (scrollLocked) return;
+    scrollLocked = true;
+    window.addEventListener("wheel", preventScroll, { passive: false, capture: true });
+    window.addEventListener("touchmove", preventScroll, { passive: false, capture: true });
+    window.addEventListener("scroll", keepTop, { passive: false, capture: true });
   }
 
   function unlockScroll() {
-    window.removeEventListener("wheel", preventScroll);
-    window.removeEventListener("touchmove", preventScroll);
+    if (!scrollLocked) return;
+    scrollLocked = false;
+    window.removeEventListener("wheel", preventScroll, { capture: true });
+    window.removeEventListener("touchmove", preventScroll, { capture: true });
+    window.removeEventListener("scroll", keepTop, { capture: true });
+    window.scrollTo(0, 0);
   }
 
   function markSeen() {
@@ -141,6 +154,7 @@
   });
 
   skipBtn.addEventListener("click", skip);
+  lockScroll();
 
   // Hold the drawing still until the page is actually visible.
   player.querySelectorAll(".intro-case-strokes path, .intro-scrib").forEach((el) => {

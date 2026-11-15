@@ -123,12 +123,19 @@ html.intro {
   html.intro { --intro-scale: 1; }
 }
 
-html.intro:not(.intro-settle),
-html.intro:not(.intro-settle) body {
+html.intro,
+html.intro body {
   overflow: hidden !important;
   height: 100%;
+  height: 100dvh;
   overscroll-behavior: none;
   touch-action: none;
+}
+
+html.intro body {
+  position: fixed;
+  inset: 0;
+  width: 100%;
 }
 
 html.intro:not(.intro-settle) .page {

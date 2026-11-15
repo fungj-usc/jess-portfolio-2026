@@ -676,11 +676,11 @@ function initHeavyScroll() {
   window.addEventListener(
     "wheel",
     (event) => {
-      if (
-        document.documentElement.classList.contains("intro") &&
-        !document.documentElement.classList.contains("intro-settle")
-      ) {
+      if (document.documentElement.classList.contains("intro")) {
         event.preventDefault();
+        target = 0;
+        current = 0;
+        window.scrollTo(0, 0);
         return;
       }
       if (event.ctrlKey || event.defaultPrevented) return;
