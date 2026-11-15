@@ -10,9 +10,10 @@
   --album-w: calc(18.25rem * var(--media-scale));
   --album-h: calc(18.46063rem * var(--media-scale));
   --album-left: calc(1.9375rem * var(--media-scale));
-  --vinyl-top: calc(1.0625rem * var(--media-scale));
-  --vinyl-h: calc(16.875rem * var(--media-scale));
-  --vinyl-w: calc(6.23rem * var(--media-scale));
+  --vinyl-scale: 0.92;
+  --vinyl-top: calc((1.0625rem + 16.875rem * (1 - var(--vinyl-scale)) / 2) * var(--media-scale));
+  --vinyl-h: calc(16.875rem * var(--media-scale) * var(--vinyl-scale));
+  --vinyl-w: calc(6.23rem * var(--media-scale) * var(--vinyl-scale));
   --vinyl-shift: calc(-7.875rem * var(--media-scale));
   --shelf-front-h: calc(4.25rem * var(--media-scale));
   --shelf-back-w: calc(19.875rem * var(--media-scale));
@@ -35,9 +36,17 @@
   --font-body: 19px;
   --font-title: 22.8px;
   --font-lead: 26.6px;
-  --font-display: 34.2px;
+  --font-display: 36px;
   --tracking: -0.02em;
   --grid: url("assets/single-grid.png?v=cream2");
+}
+
+@font-face {
+  font-family: "jessicafont";
+  src: url("assets/fonts/jessicafont-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 *,
@@ -323,10 +332,11 @@ a {
   align-items: stretch;
   width: max-content;
   margin: 0;
-  font-family: "DM Sans", sans-serif;
+  font-family: "jessicafont", cursive;
   font-size: var(--font-body);
-  font-weight: 500;
-  line-height: 1.365;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0;
   color: #fff;
   text-decoration: none;
   white-space: nowrap;
@@ -380,7 +390,7 @@ a {
   left: 0;
   z-index: 8;
   padding: 3rem var(--page-pad-x) 1rem;
-  font-family: "Schoolbell", cursive;
+  font-family: "jessicafont", cursive;
   font-size: var(--font-lg);
   font-weight: 400;
   line-height: 1.2;
@@ -445,10 +455,11 @@ a {
 }
 
 .player {
+  --player-scale: 0.92;
   position: relative;
-  flex: 0 0 20.25rem;
-  width: 20.25rem;
-  height: 20.1875rem;
+  flex: 0 0 calc(20.25rem * var(--player-scale));
+  width: calc(20.25rem * var(--player-scale));
+  height: calc(20.1875rem * var(--player-scale));
   margin-top: 0.5rem;
   margin-left: 0;
   overflow: visible;
@@ -476,7 +487,7 @@ a {
 .section-heading h2,
 .about h2 {
   margin: 0;
-  font-family: "Schoolbell", cursive;
+  font-family: "jessicafont", cursive;
   font-size: var(--font-display);
   font-weight: 400;
   line-height: 1.4;
@@ -516,26 +527,26 @@ a {
 .player-case {
   left: 0;
   top: 0;
-  width: 20.25rem;
-  height: 20.1875rem;
+  width: calc(20.25rem * var(--player-scale));
+  height: calc(20.1875rem * var(--player-scale));
   object-fit: fill;
   z-index: 2;
 }
 
 .player-record {
-  left: 3.5rem;
-  top: 7.8125rem;
-  width: 12.5rem;
-  height: 7.875rem;
+  left: calc(3.5rem * var(--player-scale));
+  top: calc(7.8125rem * var(--player-scale));
+  width: calc(12.5rem * var(--player-scale));
+  height: calc(7.875rem * var(--player-scale));
   object-fit: fill;
   z-index: 1;
 }
 
 .player-needle {
-  left: 9.34875rem;
-  top: 10.88562rem;
-  width: 7.45062rem;
-  height: 2.53313rem;
+  left: calc(9.34875rem * var(--player-scale));
+  top: calc(10.88562rem * var(--player-scale));
+  width: calc(7.45062rem * var(--player-scale));
+  height: calc(2.53313rem * var(--player-scale));
   object-fit: fill;
   transform: rotate(-1.16deg);
   transform-origin: center;
@@ -543,10 +554,10 @@ a {
 }
 
 .player-notes {
-  left: -0.875rem;
-  top: -1.25rem;
-  width: 6.9275rem;
-  height: 10.88625rem;
+  left: calc(-0.875rem * var(--player-scale));
+  top: calc(-1.25rem * var(--player-scale));
+  width: calc(6.9275rem * var(--player-scale));
+  height: calc(10.88625rem * var(--player-scale));
   object-fit: fill;
   object-position: center;
   transform: rotate(-25deg);
@@ -610,7 +621,7 @@ a {
 }
 
 .album-vinyl {
-  left: calc(var(--album-left) + var(--album-w) - calc(0.75rem * var(--media-scale)));
+  left: calc(var(--album-left) + var(--album-w) - calc(0.75rem * var(--media-scale) * var(--vinyl-scale)));
   top: var(--vinyl-top);
   width: var(--vinyl-w);
   height: var(--vinyl-h);
@@ -932,7 +943,7 @@ a {
 
 .case h1 {
   margin: 0;
-  font-family: "Schoolbell", cursive;
+  font-family: "jessicafont", cursive;
   font-size: var(--font-display);
   font-weight: 400;
   line-height: normal;
@@ -940,7 +951,7 @@ a {
 
 .case-kicker {
   margin: 0;
-  font-family: "Schoolbell", cursive;
+  font-family: "jessicafont", cursive;
   font-size: var(--font-title);
   line-height: normal;
 }
@@ -992,7 +1003,7 @@ a {
   margin: 0;
   width: 100%;
   padding-inline: var(--case-inset);
-  font-family: "Schoolbell", cursive;
+  font-family: "jessicafont", cursive;
   font-size: var(--font-title);
   font-weight: 400;
   line-height: normal;
@@ -1017,7 +1028,7 @@ a {
 .case-prompt {
   margin: 0;
   width: 100%;
-  font-family: "Schoolbell", cursive;
+  font-family: "jessicafont", cursive;
   font-size: var(--font-title);
   font-weight: 400;
   line-height: normal;
@@ -1030,7 +1041,7 @@ a {
 }
 
 .case-copy p.case-prompt {
-  font-family: "Schoolbell", cursive;
+  font-family: "jessicafont", cursive;
   font-size: var(--font-title);
   font-weight: 400;
   line-height: normal;
@@ -1150,7 +1161,7 @@ a {
 .disney-atomic-label,
 .case-map-names {
   margin: 0;
-  font-family: "Schoolbell", cursive;
+  font-family: "jessicafont", cursive;
   font-size: var(--font-caption);
   line-height: 1.2;
   color: var(--ink);
@@ -1372,7 +1383,7 @@ a {
 .impact-stat {
   margin: 0;
   width: 100%;
-  font-family: "Schoolbell", cursive;
+  font-family: "jessicafont", cursive;
   font-size: var(--font-title);
   line-height: normal;
 }
@@ -1795,7 +1806,7 @@ html.is-gated .site-gate {
 
 .site-gate-label {
   margin: 0;
-  font-family: "Schoolbell", cursive;
+  font-family: "jessicafont", cursive;
   font-size: var(--font-lead);
   font-weight: 400;
   text-align: center;
